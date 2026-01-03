@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web & App Development Course</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body{margin:0;font-family:Arial;background:#0f172a;color:#fff;}
+    header{padding:60px 20px;text-align:center;background:linear-gradient(135deg,#2563eb,#9333ea);}
+    h1{font-size:2.5rem;margin-bottom:10px;}
+    .btn{display:inline-block;margin-top:20px;padding:14px 28px;background:#22c55e;color:#000;text-decoration:none;border-radius:8px;font-weight:bold;border:none;cursor:pointer;}
+    section{padding:50px 20px;max-width:1000px;margin:auto;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+    .card{background:#1e293b;padding:25px;border-radius:12px;}
+    .price{font-size:2rem;color:#22c55e;font-weight:bold;text-align:center;}
+    form{background:#1e293b;padding:25px;border-radius:12px;max-width:500px;margin:auto;}
+    input{width:100%;padding:12px;margin:10px 0;border-radius:6px;border:none;}
+    footer{text-align:center;padding:20px;background:#020617;font-size:0.9rem;opacity:0.7;}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Become a Web & App Developer in 30 Days 🚀</h1>
+  <p>Learn Web Designing, App Development & Web2App — all in one course</p>
+  <a href="#enroll" class="btn">Enroll Now for ₹800</a>
+</header>
+
+<section>
+  <h2>Who is this course for?</h2>
+  <div class="grid">
+    <div class="card">Beginners</div>
+    <div class="card">Students</div>
+    <div class="card">Freelancers</div>
+    <div class="card">Business Owners</div>
+  </div>
+</section>
+
+<section>
+  <h2>What you'll learn</h2>
+  <div class="grid">
+    <div class="card"><h3>Web Designing</h3><ul><li>HTML & CSS</li><li>Responsive Design</li><li>Hosting</li></ul></div>
+    <div class="card"><h3>App Development</h3><ul><li>Website to App</li><li>APK Build</li><li>Testing</li></ul></div>
+    <div class="card"><h3>Web2App</h3><ul><li>Convert Website</li><li>Icon & Splash</li><li>Publish</li></ul></div>
+  </div>
+</section>
+
+<section id="enroll">
+  <h2 style="text-align:center;">Enroll Now</h2>
+
+  <form id="enrollForm">
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email Address" required>
+    <input type="tel" id="phone" placeholder="WhatsApp Number" required>
+    <button class="btn" type="submit">Save Now</button>
+  </form>
+
+  <p class="price">₹800 only</p>
+
+  <div style="text-align:center;">
+    <a href="upi://pay?pa=7385009275@fam&pn=WebAppCourse&am=800&cu=INR" class="btn">
+      Pay ₹800 & Enroll Now
+    </a>
+  </div>
+
+  <p style="text-align:center;font-size:0.9rem;opacity:0.8;">
+    After payment, please send screenshot on WhatsApp.
+  </p>
+</section>
+
+<footer>© 2026 Web & App Course</footer>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("LJkLAKxxxQ_crUBnM"); // Public Key
+  })();
+
+  document.getElementById('enrollForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+
+    // WhatsApp pre-filled message
+    const msg = `New Course Enrollment:%0AName: ${name}%0AEmail: ${email}%0AWhatsApp: ${phone}`;
+    const waURL = `https://wa.me/917385009275?text=${msg}`;
+    window.open(waURL, '_blank');
+
+    // EmailJS notification
+    emailjs.send("service_lqkq0ue", "template_egrj3v3", {
+      name: name,
+      email: email,
+      phone: phone
+    }).then(function(response){
+      console.log("Email sent!", response.status, response.text);
+      alert("Details saved & email sent! Now proceed to payment.");
+      document.getElementById('enrollForm').reset();
+    }, function(error){
+      console.log("Email failed...", error);
+      alert("Details saved, but email failed. Proceed to payment.");
+      document.getElementById('enrollForm').reset();
+    });
+
+  });
+</script>
+
+</body>
+</html>
