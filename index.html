@@ -2,581 +2,484 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE-LIT | Luxury Combos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THE LIT FOUNDATION | OFFICIAL 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        cream: '#F9F8F6',
-                        dark: '#111111',
-                    }
-                }
-            }
-        }
-    </script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { scroll-behavior: smooth; }
-        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
-        .hide-scroll::-webkit-scrollbar { display: none; }
-        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        :root { --gold: #D4AF37; --red: #E11D48; }
+        body { background-color: #ffffff; color: #000000; font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; font-size: 12px; }
+        .gold-text { background: linear-gradient(to right, #B4941F, #D4AF37, #F3D060); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .bg-gold-gradient { background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* Hero Zoom Animation */
-        .hero-zoom { animation: slowZoom 15s infinite alternate linear; }
-        @keyframes slowZoom {
-            from { transform: scale(1); }
-            to { transform: scale(1.12); }
-        }
-
-        /* Product Hover Transitions */
-        .img-back { opacity: 0; transition: opacity 0.6s ease, transform 0.6s ease; transform: scale(1.05); }
-        .img-front { opacity: 1; transition: opacity 0.6s ease, transform 0.6s ease; transform: scale(1); }
-        .group:hover .img-back { opacity: 1; transform: scale(1); }
-        .group:hover .img-front { opacity: 0; transform: scale(1.05); }
-
-        /* Drawers & Modals */
-        .drawer { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .translate-x-full { transform: translateX(100%); }
-        .translate-x-0 { transform: translateX(0); }
-        .modal-overlay { transition: opacity 0.3s ease; }
+        /* Red Marquee */
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { animation: marquee 30s linear infinite; display: flex; width: max-content; }
         
-        /* Loader */
-        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #111; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* Drawer Transitions */
+        .drawer { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); transform: translateX(-100%); }
+        .drawer-open { transform: translateX(0); }
+        .cart-drawer { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); transform: translateX(100%); }
+        .cart-open { transform: translateX(0); }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 3D Tilt Effect */
+        .hero-container { perspective: 1000px; }
+        .hero-tilt { transition: transform 0.1s ease-out; transform-style: preserve-3d; }
+
+        /* Professional Form & UI */
+        input, textarea, select { border: 1px solid #e5e7eb !important; padding: 12px !important; width: 100%; border-radius: 4px !important; background: #f9fafb !important; color: #000 !important; outline: none; }
+        input:focus { border-color: #000 !important; }
+        .btn-black { background: #000; color: #fff; padding: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; border-radius: 4px; }
+        .btn-black:active { transform: scale(0.98); }
+        .product-card { background: #fff; border: 1px solid #f3f4f6; transition: all 0.3s; }
+        .product-card:hover { border-color: #000; }
+        .team-card { background: #fff; border: 1px solid #f3f4f6; border-radius: 2rem; transition: all 0.3s; }
+        .team-card:hover { transform: translateY(-5px); border-color: #D4AF37; }
     </style>
 </head>
-<body class="font-sans text-dark bg-white overflow-x-hidden selection:bg-dark selection:text-white">
+<body>
 
-    <div class="bg-dark text-white text-xs tracking-[0.2em] text-center py-2 font-medium">
-        WHERE DREAMS MEET BRUSHES
+    <!-- 1. Scrolling Red Marquee Bar -->
+    <div class="bg-rose-600 py-2 overflow-hidden z-[80] relative">
+        <div class="animate-marquee text-[10px] font-black tracking-[0.2em] uppercase italic text-white">
+            <span class="mx-12">PAN INDIA DELIVERY</span> <span class="mx-12">ONLY PREPAID HUB 2026</span> <span class="mx-12">LUXURY HUB</span>
+            <span class="mx-12">PAN INDIA DELIVERY</span> <span class="mx-12">ONLY PREPAID HUB 2026</span> <span class="mx-12">LUXURY HUB</span>
+        </div>
     </div>
 
-    <header class="sticky top-0 z-40 glass-nav border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <button class="p-2 hover:opacity-70 transition">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
-            
-            <a href="#" class="font-serif text-3xl font-semibold tracking-wider">THE-LIT</a>
-            
-            <button onclick="toggleCart()" class="p-2 relative hover:opacity-70 transition flex items-center gap-2">
-                <span class="hidden md:block text-sm uppercase tracking-widest font-medium">Cart</span>
-                <i class="fa-solid fa-bag-shopping text-xl"></i>
-                <span id="cart-count" class="absolute top-0 right-0 bg-dark text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-            </button>
+    <!-- 2. Gold Announcement Bar -->
+    <div class="bg-gold-gradient text-black py-1.5 text-center text-[9px] font-black uppercase tracking-[0.4em] relative z-[70]">
+        The Lit Professional Foundation | 2026 Drops Are Live
+    </div>
+
+    <!-- 3. Sticky Header -->
+    <header class="sticky top-0 z-[60] bg-white border-b border-gray-100 h-16 shadow-sm">
+        <div class="container mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <button onclick="toggleMenu(true)" class="p-1 hover:text-rose-600 transition-colors">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <div onclick="showView('home')" class="flex items-center gap-0.5 cursor-pointer font-black italic text-2xl uppercase group">
+                    <span class="text-black group-hover:text-rose-600 transition-colors">THE</span><span class="text-rose-600 group-hover:text-black transition-colors">LIT</span>
+                </div>
+            </div>
+            <div onclick="toggleCart(true)" class="relative p-2 cursor-pointer hover:scale-110 active:scale-90 transition-all">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span id="cart-count" class="absolute top-1 right-1 bg-rose-600 text-white text-[8px] font-black h-4 w-4 rounded-full flex items-center justify-center hidden">0</span>
+            </div>
         </div>
     </header>
 
-    <section class="relative h-[70vh] md:h-[85vh] w-full bg-cream overflow-hidden flex items-center justify-center">
-        <img src="https://img.sanishtech.com/u/af11f19531ceb8275a2e8d5020294e2b.png" alt="Hero" class="absolute inset-0 w-full h-full object-contain hero-zoom opacity-90 p-10 md:p-20">
-        
-        <div class="relative z-10 text-center px-4 flex flex-col items-center">
-            <h1 class="font-serif text-4xl md:text-6xl font-bold tracking-widest mb-6">NEW COLLECTION</h1>
-            <button onclick="document.getElementById('products').scrollIntoView()" class="bg-dark text-white px-10 py-4 uppercase tracking-[0.2em] text-sm hover:bg-white hover:text-dark border border-dark transition-colors duration-300 shadow-xl shadow-black/10">
-                Discover Now
-            </button>
+    <!-- 4. Full-Screen Hamburger Menu (Solid White-Black) -->
+    <div id="nav-drawer" class="drawer fixed inset-0 z-[150] bg-white flex flex-col p-8">
+        <div class="flex justify-between items-center mb-16 border-b border-gray-100 pb-6">
+            <div class="text-2xl font-black italic text-black uppercase">THE <span class="text-rose-600">LIT</span></div>
+            <button onclick="toggleMenu(false)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
         </div>
-    </section>
+        <nav class="flex flex-col gap-10 font-black uppercase italic text-2xl tracking-tighter">
+            <span onclick="showView('home')" class="hover:text-rose-600 cursor-pointer">Home Hub</span>
+            <span onclick="showView('ipl')" class="hover:text-rose-600 cursor-pointer">IPL Drop 2026</span>
+            <span onclick="showView('contact')" class="hover:text-rose-600 cursor-pointer">Support</span>
+            <span onclick="showView('faq')" class="hover:text-rose-600 cursor-pointer">FAQ Hub</span>
+        </nav>
+        <div class="mt-auto flex gap-10 border-t border-gray-100 pt-10">
+            <a href="https://www.instagram.com/thelitfoundation?igsh=dGNkcXlxaWV6aXVq" target="_blank" class="hover:text-rose-600 transition-all">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+            </a>
+            <a href="https://wa.me/917756810120" target="_blank" class="hover:text-rose-600 transition-all">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </a>
+        </div>
+    </div>
 
-    <section class="py-16 bg-white border-b border-gray-100 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 mb-8">
-            <h2 class="font-serif text-2xl tracking-widest uppercase">Curated Styles</h2>
+    <!-- 5. Cart Drawer -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 z-[100] hidden" onclick="toggleCart(false)"></div>
+    <div id="cart-drawer" class="cart-drawer fixed right-0 top-0 bottom-0 z-[110] w-full max-w-sm bg-white flex flex-col p-6 shadow-2xl border-l border-gray-100">
+        <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+            <h2 class="text-[11px] font-black uppercase text-black tracking-[0.3em]">Your Bag</h2>
+            <button onclick="toggleCart(false)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
         </div>
-        <div class="flex overflow-x-auto hide-scroll gap-6 px-4 md:px-8 max-w-7xl mx-auto snap-x">
-            <img src="https://img.sanishtech.com/u/89a245ebb7058040f13f6dadb238d88b.jpg" class="w-64 h-80 object-cover rounded-2xl snap-center flex-shrink-0 shadow-lg">
-            <img src="https://img.sanishtech.com/u/2b7283be27293077f74522611aea5ee6.jpg" class="w-64 h-80 object-cover rounded-2xl snap-center flex-shrink-0 shadow-lg">
-            <img src="https://img.sanishtech.com/u/241ab6ec7f3780462ced95764c78223e.png" class="w-64 h-80 object-cover rounded-2xl snap-center flex-shrink-0 shadow-lg bg-gray-50">
-            <img src="https://img.sanishtech.com/u/a4944e7150e3ecaa4efd06fae422f7ca.png" class="w-64 h-80 object-cover rounded-2xl snap-center flex-shrink-0 shadow-lg bg-gray-50">
+        <div id="cart-items" class="flex-1 overflow-y-auto space-y-4 no-scrollbar"></div>
+        <div id="cart-footer" class="pt-6 border-t border-gray-100 hidden">
+            <div class="flex justify-between mb-5"><span class="text-[10px] uppercase font-bold text-gray-400">Log Total</span><span id="cart-total" class="font-black text-sm text-black">₹0</span></div>
+            <button onclick="startCheckout()" class="w-full btn-black py-4.5 text-[10px]">Secure My Gear</button>
         </div>
-    </section>
+    </div>
 
-    <section id="products" class="py-24 bg-cream">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-serif text-3xl md:text-4xl tracking-widest mb-4">THE LUXURY EDIT</h2>
-                <p class="text-gray-500 uppercase tracking-widest text-sm">Exclusive Combos</p>
+    <!-- 6. Main Content -->
+    <main id="main-content" class="min-h-screen"></main>
+
+    <!-- 7. Footer -->
+    <footer class="bg-gray-50 border-t border-gray-100 py-20 px-8 text-left">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
+            <div class="flex flex-col gap-5 font-bold">
+                <h3 class="text-[9px] font-black uppercase tracking-[0.4em] text-gray-400 italic mb-4">Nav Hub</h3>
+                <span onclick="showView('home')" class="text-[10px] uppercase tracking-widest text-black cursor-pointer hover:text-rose-600 italic">Home Hub</span>
+                <span onclick="showView('ipl')" class="text-[10px] uppercase tracking-widest text-black cursor-pointer hover:text-rose-600 italic">IPL Drops 2026</span>
+                <span onclick="showView('contact')" class="text-[10px] uppercase tracking-widest text-black cursor-pointer hover:text-rose-600 italic">Support Hub</span>
             </div>
-            
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+            <div class="flex flex-col gap-5 font-bold">
+                <h3 class="text-[9px] font-black uppercase tracking-[0.4em] text-gray-400 italic mb-4">Legal Log</h3>
+                <span onclick="showView('policy-return')" class="text-[10px] uppercase tracking-widest text-black cursor-pointer hover:text-rose-600 italic">Return Policy</span>
+                <span onclick="showView('policy-shipping')" class="text-[10px] uppercase tracking-widest text-black cursor-pointer hover:text-rose-600 italic">Shipping Hub</span>
+                <span onclick="showView('policy-terms')" class="text-[10px] uppercase tracking-widest text-black cursor-pointer hover:text-rose-600 italic">Terms Hub</span>
+            </div>
+            <div class="flex flex-col gap-5">
+                <h3 class="text-[9px] font-black uppercase tracking-[0.4em] text-gray-400 italic mb-4">Official Links</h3>
+                <div class="flex gap-10 mb-6">
+                    <a href="https://www.instagram.com/thelitfoundation?igsh=dGNkcXlxaWV6aXVq" target="_blank" class="hover:text-rose-600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
+                    <a href="https://wa.me/917756810120" target="_blank" class="hover:text-rose-600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
                 </div>
-        </div>
-    </section>
-
-    <section class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-16">
-            <div class="w-full md:w-1/2">
-                <img src="https://img.sanishtech.com/u/241ab6ec7f3780462ced95764c78223e.png" alt="Story" class="w-full h-auto rounded-3xl shadow-2xl bg-cream object-cover aspect-square">
+                <p class="text-[8px] tracking-[0.2em] text-gray-400 uppercase font-black italic">Hotline: +91 77568 10120</p>
             </div>
-            <div class="w-full md:w-1/2 space-y-6">
-                <h2 class="font-serif text-3xl md:text-5xl tracking-wide">The Art of Detail</h2>
-                <p class="text-gray-600 leading-relaxed font-light text-lg">
-                    Born from a passion for minimalist elegance, THE-LIT represents the pinnacle of modern luxury. Every combo is curated to elevate your daily aesthetics, blending premium craftsmanship with uncompromising street-ready style.
-                </p>
-                <button class="border-b border-dark pb-1 uppercase tracking-widest text-sm font-medium hover:text-gray-500 hover:border-gray-500 transition">Read Our Story</button>
+            <div class="flex flex-col gap-4 text-right md:text-left">
+                <p class="text-xl font-black italic text-black">THE <span class="text-rose-600">LIT</span> FOUNDATION</p>
+                <p class="text-[9px] font-bold text-gray-300 uppercase tracking-widest leading-loose">EST. 2026. ALL RIGHTS RESERVED SEAMLESS HUB.</p>
             </div>
-        </div>
-    </section>
-
-    <section class="w-full h-64 md:h-96 relative overflow-hidden">
-        <img src="https://img.sanishtech.com/u/55affe48b90b7335d2011ff545b6d5f9.png" class="absolute inset-0 w-full h-full object-cover">
-        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-            <h2 class="text-white font-serif text-3xl md:text-5xl tracking-widest text-center px-4">ELEVATE YOUR EVERYDAY</h2>
-        </div>
-    </section>
-
-    <footer class="bg-dark text-white pt-20 pb-10">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-            <div>
-                <h3 class="font-serif text-2xl tracking-widest mb-6">THE-LIT</h3>
-                <p class="text-gray-400 font-light text-sm max-w-xs leading-relaxed">Redefining modern luxury with exclusive, curated essentials designed for the bold.</p>
-            </div>
-            <div>
-                <h4 class="uppercase tracking-widest text-sm mb-6 font-medium">Customer Care</h4>
-                <ul class="space-y-4 text-gray-400 font-light text-sm">
-                    <li><a href="#" class="hover:text-white transition">Shipping & Returns</a></li>
-                    <li><a href="#" class="hover:text-white transition">Prepaid Orders Policy</a></li>
-                    <li><a href="#" class="hover:text-white transition">FAQ</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="uppercase tracking-widest text-sm mb-6 font-medium">Connect</h4>
-                <div class="flex gap-6">
-                    <a href="https://www.instagram.com/thelitfoundation?igsh=dGNkcXlxaWV6aXVq" target="_blank" class="text-2xl hover:text-gray-400 transition"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://wa.me/917756810120" target="_blank" class="text-2xl hover:text-gray-400 transition"><i class="fa-brands fa-whatsapp"></i></a>
-                </div>
-                <p class="text-gray-400 font-light text-sm mt-6">Email: support@the-lit.com</p>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 uppercase tracking-wider">
-            <p>&copy; 2026 THE-LIT. All Rights Reserved.</p>
-            <p class="mt-2 md:mt-0">Prepaid Orders Only.</p>
         </div>
     </footer>
 
-    <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-50 opacity-0 pointer-events-none modal-overlay"></div>
-    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-50 shadow-2xl drawer translate-x-full flex flex-col">
-        <div class="p-6 border-b flex justify-between items-center">
-            <h2 class="font-serif text-2xl tracking-widest">YOUR CART</h2>
-            <button onclick="toggleCart()" class="text-xl hover:opacity-50"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6 hide-scroll">
-            </div>
-
-        <div class="p-6 border-t bg-cream">
-            <div class="flex justify-between mb-6 font-medium text-lg">
-                <span>Subtotal</span>
-                <span id="cart-total">₹0</span>
-            </div>
-            <p class="text-xs text-center text-gray-500 mb-4 uppercase tracking-widest">Shipping calculated at checkout. Prepaid Only.</p>
-            <button onclick="startCheckout()" class="w-full bg-dark text-white py-4 uppercase tracking-[0.2em] text-sm hover:bg-gray-800 transition">
-                Checkout
-            </button>
-        </div>
-    </div>
-
-    <div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeProductModal()"></div>
-        <div class="relative bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row animate-[fadeIn_0.3s_ease]">
-            <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center hover:bg-dark hover:text-white transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="w-full md:w-1/2 bg-cream p-8 flex items-center justify-center">
-                <img id="modal-img" src="" class="w-full h-auto object-contain max-h-[50vh] drop-shadow-xl">
-            </div>
-            <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center overflow-y-auto hide-scroll">
-                <span class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">Premium Combo</span>
-                <h2 id="modal-title" class="font-serif text-3xl mb-4">Product Name</h2>
-                <p id="modal-price" class="text-xl font-medium mb-6">₹0</p>
-                <p class="text-gray-600 font-light text-sm leading-relaxed mb-8">
-                    Elevate your collection with this premium pairing. Crafted for those who appreciate the finer details. Exclusively available as a prepaid order to ensure priority fulfillment.
-                </p>
-                <div class="flex gap-4">
-                    <button id="modal-add-btn" class="flex-1 border border-dark py-4 uppercase tracking-widest text-sm hover:bg-dark hover:text-white transition">Add to Cart</button>
-                    <button id="modal-buy-btn" class="flex-1 bg-dark text-white py-4 uppercase tracking-widest text-sm hover:bg-gray-800 transition shadow-lg shadow-dark/20">Buy Now</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="checkout-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
-        <div class="relative bg-white w-full max-w-xl max-h-[90vh] rounded-3xl overflow-y-auto hide-scroll shadow-2xl animate-[fadeIn_0.3s_ease]">
-            <div class="p-6 border-b flex justify-between items-center sticky top-0 bg-white/90 backdrop-blur z-10">
-                <h2 class="font-serif text-xl tracking-widest uppercase" id="checkout-title">Secure Checkout</h2>
-                <button onclick="closeCheckout()" class="text-xl hover:opacity-50"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <div class="p-6 md:p-10">
-                <div id="step-1" class="space-y-6">
-                    <h3 class="uppercase tracking-widest text-sm font-medium mb-4 text-gray-500">1. Shipping Details</h3>
-                    <input type="text" id="co-name" placeholder="Full Name" class="w-full border-b border-gray-300 py-3 focus:outline-none focus:border-dark transition">
-                    <input type="email" id="co-email" placeholder="Email Address" class="w-full border-b border-gray-300 py-3 focus:outline-none focus:border-dark transition">
-                    <input type="tel" id="co-phone" placeholder="Phone Number" class="w-full border-b border-gray-300 py-3 focus:outline-none focus:border-dark transition">
-                    <textarea id="co-address" placeholder="Complete Shipping Address" rows="3" class="w-full border-b border-gray-300 py-3 focus:outline-none focus:border-dark transition resize-none"></textarea>
-                    <button onclick="nextStep(2)" class="w-full bg-dark text-white py-4 uppercase tracking-[0.2em] text-sm hover:bg-gray-800 transition mt-6">Continue to Order</button>
-                </div>
-
-                <div id="step-2" class="space-y-6 hidden">
-                    <h3 class="uppercase tracking-widest text-sm font-medium mb-4 text-gray-500">2. Order Summary</h3>
-                    <div id="co-summary-items" class="space-y-4 max-h-40 overflow-y-auto hide-scroll text-sm"></div>
-                    <div class="flex justify-between font-serif text-xl pt-4 border-t">
-                        <span>Total to Pay:</span>
-                        <span id="co-summary-total">₹0</span>
-                    </div>
-                    <div class="bg-cream p-4 text-center rounded-xl text-xs text-gray-600 mt-4">
-                        <i class="fa-solid fa-shield-halved mb-2 text-lg text-dark"></i>
-                        <p>We only accept Prepaid Orders. Cash on Delivery is not available.</p>
-                    </div>
-                    <div class="flex gap-4 mt-6">
-                        <button onclick="nextStep(1)" class="w-1/3 border border-gray-300 py-4 uppercase tracking-widest text-sm hover:bg-gray-50 transition">Back</button>
-                        <button onclick="nextStep(3)" class="w-2/3 bg-dark text-white py-4 uppercase tracking-[0.2em] text-sm hover:bg-gray-800 transition shadow-lg shadow-dark/20">Pay Now</button>
-                    </div>
-                </div>
-
-                <div id="step-3" class="space-y-6 hidden text-center">
-                    <h3 class="uppercase tracking-widest text-sm font-medium mb-2 text-gray-500">3. Scan & Pay</h3>
-                    <p class="text-sm text-gray-600 mb-6">Scan the QR code below using any UPI app to pay <strong id="qr-amount" class="text-dark"></strong>.</p>
-                    <div class="border-4 border-gray-100 p-4 inline-block rounded-2xl shadow-xl">
-                        <img src="https://img.sanishtech.com/u/2926e2d600b2d1ef57e1e1d438b625b4.jpg" alt="UPI QR Code" class="w-48 h-48 object-cover rounded-xl">
-                    </div>
-                    <div class="flex gap-4 mt-8">
-                        <button onclick="nextStep(2)" class="w-1/3 border border-gray-300 py-4 uppercase tracking-widest text-sm hover:bg-gray-50 transition">Back</button>
-                        <button onclick="nextStep(4)" class="w-2/3 bg-dark text-white py-4 uppercase tracking-[0.2em] text-sm hover:bg-gray-800 transition">I Have Paid</button>
-                    </div>
-                </div>
-
-                <div id="step-4" class="space-y-6 hidden text-center">
-                    <h3 class="uppercase tracking-widest text-sm font-medium mb-2 text-gray-500">4. Payment Verification</h3>
-                    <p class="text-sm text-gray-600 mb-6">Please upload a screenshot of your successful payment.</p>
-                    
-                    <div class="border-2 border-dashed border-gray-300 rounded-2xl p-8 hover:bg-cream transition relative cursor-pointer group">
-                        <input type="file" id="co-screenshot" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="previewImage(this)">
-                        <div id="upload-prompt" class="space-y-2">
-                            <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-400 group-hover:text-dark transition"></i>
-                            <p class="text-sm text-gray-500">Click to upload screenshot</p>
-                        </div>
-                        <img id="upload-preview" src="" class="hidden w-full h-40 object-contain rounded">
-                    </div>
-
-                    <button id="btn-submit-order" onclick="processOrder()" class="w-full bg-dark text-white py-4 uppercase tracking-[0.2em] text-sm hover:bg-gray-800 transition mt-6 flex items-center justify-center gap-2">
-                        <span>Submit Order</span>
-                        <div id="submit-loader" class="loader hidden"></div>
-                    </button>
-                </div>
-
-                <div id="step-5" class="space-y-6 hidden text-center py-10">
-                    <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
-                        <i class="fa-solid fa-check"></i>
-                    </div>
-                    <h2 class="font-serif text-3xl mb-2">Order Confirmed</h2>
-                    <p class="text-gray-500 text-sm max-w-xs mx-auto mb-8">Your luxury combo is being prepared. We will contact you shortly with tracking details.</p>
-                    <button onclick="closeCheckout(true)" class="border-b border-dark pb-1 uppercase tracking-widest text-sm font-medium hover:text-gray-500 transition">Back to Store</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Data
-        const products = [
-            { id: 1, name: "The-Lit Elite Combo", price: 999, img1: "https://img.sanishtech.com/u/89a245ebb7058040f13f6dadb238d88b.jpg", img2: "https://img.sanishtech.com/u/2b7283be27293077f74522611aea5ee6.jpg" },
-            { id: 2, name: "The-Lit Street Combo", price: 999, img1: "https://img.sanishtech.com/u/2b7283be27293077f74522611aea5ee6.jpg", img2: "https://img.sanishtech.com/u/241ab6ec7f3780462ced95764c78223e.png" },
-            { id: 3, name: "The-Lit Urban Combo", price: 999, img1: "https://img.sanishtech.com/u/241ab6ec7f3780462ced95764c78223e.png", img2: "https://img.sanishtech.com/u/a4944e7150e3ecaa4efd06fae422f7ca.png" },
-            { id: 4, name: "The-Lit Sports Combo", price: 999, img1: "https://img.sanishtech.com/u/a4944e7150e3ecaa4efd06fae422f7ca.png", img2: "https://img.sanishtech.com/u/89a245ebb7058040f13f6dadb238d88b.jpg" },
-            { id: 5, name: "The-Lit Classic Pack", price: 999, img1: "https://img.sanishtech.com/u/89a245ebb7058040f13f6dadb238d88b.jpg", img2: "https://img.sanishtech.com/u/241ab6ec7f3780462ced95764c78223e.png" },
-            { id: 6, name: "The-Lit Premium Trio", price: 999, img1: "https://img.sanishtech.com/u/2b7283be27293077f74522611aea5ee6.jpg", img2: "https://img.sanishtech.com/u/a4944e7150e3ecaa4efd06fae422f7ca.png" },
-            { id: 7, name: "The-Lit Signature Combo", price: 999, img1: "https://img.sanishtech.com/u/241ab6ec7f3780462ced95764c78223e.png", img2: "https://img.sanishtech.com/u/89a245ebb7058040f13f6dadb238d88b.jpg" },
-            { id: 8, name: "The-Lit Luxe Pack", price: 999, img1: "https://img.sanishtech.com/u/a4944e7150e3ecaa4efd06fae422f7ca.png", img2: "https://img.sanishtech.com/u/2b7283be27293077f74522611aea5ee6.jpg" },
-            { id: 9, name: "The-Lit Daily Combo", price: 999, img1: "https://img.sanishtech.com/u/89a245ebb7058040f13f6dadb238d88b.jpg", img2: "https://img.sanishtech.com/u/a4944e7150e3ecaa4efd06fae422f7ca.png" },
-            { id: 10, name: "The-Lit Essential Pack", price: 999, img1: "https://img.sanishtech.com/u/2b7283be27293077f74522611aea5ee6.jpg", img2: "https://img.sanishtech.com/u/241ab6ec7f3780462ced95764c78223e.png" }
+        // --- DATA REPOSITORIES ---
+        const PRODUCTS = [
+            { id: 1, team: 'RCB', name: 'RCB Official Jersey 2026', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/9c0d00dcb984153eb3aa789cf91dcf44.jpg?v=1774385881', desc: "Season 2026 Player Edition. Professional-grade micro-mesh with moisture-wicking technology." },
+            { id: 2, team: 'CSK', name: 'CSK Official Jersey 2026', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/7dadd0a06d0b35921c85fea8f0d7602a.jpg?v=1774386235', desc: "Yellow Armor 2026. Official fan edition gear with elite synthetic blend fabric." },
+            { id: 3, team: 'RR', name: 'RR Pink Pride Jersey 2026', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/b66e0d82265ceeef262458a1a751279d.jpg?v=1774386432', desc: "Royal Pink 2026. Traditional heritage patterns meet high-intensity performance mesh." },
+            { id: 4, team: 'KKR', name: 'KKR Knight Rider Jersey 2026', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/845973ff5021aa7103a745678db33225.jpg?v=1774386439', desc: "Knights Purple Gold 2026. Specialized sweat-wicking tech with reinforced athletic stitching." },
+            { id: 5, team: 'SRH', name: 'SRH Orange Army Jersey 2026', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/c5c591735d635727a4c46abeff9bc531.jpg?v=1774386445', desc: "Rise With Orange 2026. Strategic ventilation panels for maximum long-wear comfort." },
+            { id: 6, team: 'DC', name: 'DC Blue Roar Jersey 2026', price: 350, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-25-16-23-43-90_99c04817c0de5652397fc8b56c3b3817.jpg', desc: "Delhi Blue Roar 2026. Official fan-edition gear with lightweight ergonomic design." },
+            { id: 7, team: 'MI', name: 'MI Blue Gold Jersey 2026', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/695ca7dc284d22732e334e218f342415.jpg?v=1774386473', desc: "Mumbai Iconic Blue Gold 2026. Metallic thread detailing and premium player fit." },
+            { id: 8, team: 'GT', name: "GT Titan's Jersey 2026", price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/c3c36be6b7dd72c7c429b46a5cc0cf64.jpg?v=1774386467', desc: "Titans Navy Elite 2026. Optimized high-mobility panels with ultra-light synth fabric." },
+            { id: 9, team: 'LSG', name: 'LSG Lucknow Blue Jersey 2026', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/6676585c320cfcc379b8956f029fae6b.jpg?v=1774386453', desc: "Lucknow Teal 2026. Official drop with sophisticated air-permeable mesh construction." },
+            { id: 10, team: 'PBKS', name: 'PBKS Sadda Punjab Jersey 2026', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/7799cbb0dffc9c0a9857b53ea57aebd7.jpg?v=1774386478', desc: "Punjab Red 2026. Bold athletic aesthetics built for professional performance and fan durability." }
         ];
 
-        let cart = JSON.parse(localStorage.getItem('thelit_cart')) || [];
-        
-        // Init
-        document.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
-            updateCartUI();
-        });
+        const COLLECTIONS = [
+            { t: 'Jerseys', i: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-25-16-23-43-90_99c04817c0de5652397fc8b56c3b3817.jpg' },
+            { t: 'IPL Jerseys 2026', i: 'https://cdn.shopify.com/s/files/1/0739/6599/4038/files/Picsart_26-03-25_14-47-51-475.jpg?v=1774433425', link: 'ipl' },
+            { t: 'Kids Wear', i: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_14-49-50-956.jpg' },
+            { t: 'Shorts Collection', i: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_14-49-14-143.jpg' },
+            { t: 'Accessories', i: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_14-50-51-316.jpg' },
+            { t: 'The Lit Premium', i: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_14-51-55-036.jpg' }
+        ];
 
-        // Render Products
-        function renderProducts() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = products.map(p => `
-                <div class="group relative bg-white rounded-3xl p-6 shadow-sm hover:shadow-2xl hover:shadow-dark/10 transition-all duration-500 cursor-pointer" onclick="openProduct(${p.id})">
-                    <div class="absolute top-6 left-6 z-10 bg-dark text-white text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">Combo</div>
-                    <div class="relative w-full aspect-square mb-6 overflow-hidden rounded-2xl bg-cream flex items-center justify-center">
-                        <img src="${p.img1}" class="absolute w-full h-full object-contain p-4 img-front mix-blend-multiply">
-                        <img src="${p.img2}" class="absolute w-full h-full object-contain p-4 img-back mix-blend-multiply">
+        const TEAMS = [
+            { n: 'RCB', l: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_13-57-54-486.jpg' },
+            { n: 'CSK', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Chennai_Super_Kings_Logo.svg/1200px-Chennai_Super_Kings_Logo.svg.png' },
+            { n: 'KKR', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Kolkata_Knight_Riders_Logo.svg/1200px-Kolkata_Knight_Riders_Logo.svg.png' },
+            { n: 'AL NASSR', l: 'https://ik.imagekit.io/h9qdzohx9/images.jpeg' },
+            { n: 'BARCELONA', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/1200px-FC_Barcelona_%28crest%29.svg.png' },
+            { n: 'REAL MADRID', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/1200px-Real_Madrid_CF.svg.png' },
+            { n: 'GODLIKE', l: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_17-16-40-239.png' },
+            { n: 'SOUL', l: 'https://ik.imagekit.io/h9qdzohx9/30373950be12a79c6efd8d03d2232b1a.jpg' },
+            { n: 'ORANGUTAN', l: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_17-16-40-239.png' }
+        ];
+
+        // --- Logic State ---
+        let cart = [];
+        let curSize = 'M';
+        let checkoutStep = 1;
+        let sUrl = '';
+        let uData = {};
+
+        // --- View Routing ---
+        function showView(vid, pid = null) {
+            toggleMenu(false); window.scrollTo({ top:0, behavior:'smooth' });
+            const c = document.getElementById('main-content');
+
+            if(vid === 'home') {
+                c.innerHTML = `
+                    <div class="fade-in">
+                        <section class="h-[85vh] relative flex items-center justify-center overflow-hidden hero-container" onmousemove="handleTilt(event)">
+                            <img src="https://img.sanishtech.com/u/a081f6bcd58a9f4daec6ee185032a92b.jpg" class="hero-tilt absolute inset-0 w-full h-full object-cover brightness-[0.45]">
+                            <div class="relative z-10 text-center px-6">
+                                <h1 class="text-7xl md:text-[10rem] font-black italic text-white tracking-tighter leading-[0.85] mb-8">THE <span class="text-rose-600">LIT</span><br><span class="text-3xl md:text-6xl tracking-[0.6em] not-italic block mt-4">PREMIUM</span></h1>
+                                <button onclick="showView('ipl')" class="mt-10 bg-white text-black px-16 py-4.5 font-black uppercase text-[10px] tracking-widest italic shadow-2xl transition-transform active:scale-90">Explore drops</button>
+                            </div>
+                        </section>
                         
-                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                            <span class="bg-white/90 backdrop-blur text-dark px-6 py-2 rounded-full text-xs font-medium uppercase tracking-widest shadow-lg">Quick View</span>
+                        <div class="py-24 border-y border-gray-100 bg-white flex flex-col items-center">
+                            <h2 class="text-4xl md:text-7xl font-black uppercase tracking-tighter italic text-center px-6 leading-tight">Play Strong, Wear Premium</h2>
+                            <div class="h-1 bg-gradient-to-r from-rose-600 via-gold to-rose-600 w-24 mt-8"></div>
+                        </div>
+
+                        <section class="p-4 py-24 bg-white">
+                            <h2 class="text-xl font-black uppercase italic mb-12 tracking-widest border-l-8 border-rose-600 pl-6 text-black">Collections</h2>
+                            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                                ${COLLECTIONS.map(x => `
+                                    <div onclick="showView('${x.link || 'home'}')" class="relative aspect-[1/1.3] overflow-hidden group border border-gray-100 hover:border-black transition-all duration-700 cursor-pointer">
+                                        <img src="${x.i}" class="w-full h-full object-cover brightness-[0.6] group-hover:brightness-90 transition-all duration-[2s] group-hover:scale-110">
+                                         <div class="absolute inset-0 flex items-end p-6"><span class="text-2xl font-black italic uppercase text-white tracking-tighter">${x.t}</span></div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>
+
+                        <section class="py-24 bg-white relative">
+                            <h2 class="text-3xl font-black italic text-center mb-20 uppercase tracking-tighter">Shop By Team</h2>
+                            <div class="flex items-center group">
+                                <button onclick="scrollTeams(-300)" class="absolute left-6 z-10 bg-white p-3 rounded-full shadow-2xl active:scale-90"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"><path d="m15 18-6-6 6-6"></path></svg></button>
+                                <div id="team-scroller" class="flex gap-6 overflow-x-auto px-10 no-scrollbar snap-x snap-mandatory pb-10">
+                                    ${TEAMS.map(t => `
+                                        <div class="flex-none w-[220px] md:w-[280px] snap-center">
+                                            <div class="team-card aspect-[3/4.5] p-10 flex flex-col items-center justify-between shadow-sm">
+                                                <div class="flex-1 flex items-center justify-center"><img src="${t.l}" class="max-h-full object-contain mix-blend-multiply"></div>
+                                                <div class="w-full text-center border-t border-gray-50 pt-8 font-black text-[10px] uppercase">${t.n}</div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <button onclick="scrollTeams(300)" class="absolute right-6 z-10 bg-white p-3 rounded-full shadow-2xl active:scale-90"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" transform="rotate(180)"><path d="m15 18-6-6 6-6"></path></svg></button>
+                            </div>
+                        </section>
+                    </div>
+                `;
+            } else if(vid === 'ipl') {
+                c.innerHTML = `
+                    <div class="fade-in pb-24">
+                        <div class="p-8 bg-white border-b border-gray-100 flex justify-between items-center sticky top-16 z-40 backdrop-blur-md">
+                            <h2 class="text-2xl font-black italic tracking-tighter uppercase">IPL 2026 DROP</h2>
+                            <button onclick="showView('home')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"><path d="m15 18-6-6 6-6"></path></svg></button>
+                        </div>
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 lg:p-8">
+                            ${PRODUCTS.map(p => `
+                                <div onclick="showView('detail', ${p.id})" class="product-card group cursor-pointer active:scale-95 transition-all">
+                                    <div class="aspect-[1/1.3] overflow-hidden"><img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"></div>
+                                    <div class="p-6 text-left">
+                                        <p class="text-rose-600 text-[9px] font-black uppercase mb-1 tracking-widest">${p.team} 2026</p>
+                                        <h3 class="text-[11px] font-bold uppercase italic text-black mb-4 leading-tight">${p.name}</h3>
+                                        <div class="flex items-center gap-3"><span class="font-black text-xl tracking-tighter">₹${p.price}</span><span class="text-xs line-through text-gray-300 italic">₹${p.oldPrice}</span></div>
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
-                    <div class="text-center">
-                        <h3 class="font-serif text-xl mb-2 group-hover:text-gray-600 transition">${p.name}</h3>
-                        <p class="text-lg font-medium">₹${p.price}</p>
+                `;
+            } else if(vid === 'detail') {
+                const p = PRODUCTS.find(x => x.id === pid);
+                const also = PRODUCTS.filter(x => x.id !== pid).sort(()=>0.5-Math.random()).slice(0,4);
+                c.innerHTML = `
+                    <div class="fade-in p-6 lg:max-w-7xl lg:mx-auto pb-24 pt-10 text-left">
+                        <button onclick="showView('ipl')" class="text-[10px] font-black uppercase text-gray-400 mb-12 flex items-center gap-3 italic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m15 18-6-6 6-6"></path></svg> Back to Hub</button>
+                        <div class="lg:grid lg:grid-cols-2 lg:gap-24">
+                            <div class="aspect-[1/1.2] product-card overflow-hidden rounded-[3rem] shadow-sm mb-12"><img src="${p.img}" class="w-full h-full object-cover"></div>
+                            <div>
+                                <h1 class="text-5xl lg:text-9xl font-black uppercase italic tracking-tighter leading-[0.85] mb-10 text-black">${p.name}</h1>
+                                <p class="text-6xl font-black mb-12 tracking-tighter">₹${p.price}</p>
+                                <div class="mb-12"><p class="text-[9px] font-black uppercase text-gray-400 mb-6 tracking-[0.4em]">Professional Fit Size</p>
+                                    <div class="flex gap-4">${['S', 'M', 'L', 'XL', 'XXL'].map(s => `<button onclick="setDetailSize('${s}', this)" class="w-16 h-16 border-2 border-gray-100 font-black text-xs transition-all ${s === 'M' ? 'border-black bg-black text-white' : 'hover:border-black'}">${s}</button>`).join('')}</div>
+                                </div>
+                                <div class="mb-12 border-y border-gray-100 py-12">
+                                    <h3 class="text-[10px] font-black uppercase text-gray-400 mb-6 italic tracking-[0.3em]">Technical Description</h3>
+                                    <div id="desc-box" class="text-gray-500 italic text-[16px] leading-relaxed max-h-[85px] overflow-hidden transition-all duration-700">${p.desc}</div>
+                                    <button onclick="toggleDesc()" class="mt-8 text-rose-600 font-black uppercase text-[10px] tracking-widest flex items-center gap-3">Expand <svg id="desc-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"></path></svg></button>
+                                </div>
+                                <div class="flex flex-col sm:flex-row gap-5 pt-4">
+                                    <button onclick="addToBag(${p.id})" class="flex-1 bg-gray-100 text-black py-6 font-black uppercase text-[10px] tracking-widest italic active:scale-95 shadow-sm">Add to Bag</button>
+                                    <button onclick="addToBag(${p.id}); startCheckout();" class="flex-1 btn-black py-6 text-[10px] italic shadow-2xl">Secure Drop 2026</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-40"><h2 class="text-3xl font-black italic uppercase mb-16 tracking-tighter">You May Also Like</h2>
+                            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">${also.map(r => `<div onclick="showView('detail', ${r.id})" class="product-card aspect-[1/1.3] overflow-hidden cursor-pointer"><img src="${r.img}" class="w-full h-full object-cover"></div>`).join('')}</div>
+                        </div>
                     </div>
-                    <div class="mt-6 flex gap-2" onclick="event.stopPropagation()">
-                        <button onclick="addToCart(${p.id})" class="flex-none w-12 h-12 border border-dark rounded-full flex items-center justify-center hover:bg-dark hover:text-white transition group/btn">
-                            <i class="fa-solid fa-cart-plus group-hover/btn:scale-110 transition"></i>
-                        </button>
-                        <button onclick="buyNow(${p.id})" class="flex-1 bg-dark text-white rounded-full uppercase tracking-widest text-xs font-medium hover:bg-gray-800 transition">Buy Now</button>
+                `;
+            } else if(vid === 'checkout') renderCheckoutSystem();
+            else if(vid.startsWith('policy-')) {
+                const pols = {
+                    'policy-return': { t: 'Return Policy', c: ["The Lit Foundation is a luxury limited drop hub. Season 2026 follows a strict **NO-RETURN** policy. All sales are final.", "Replacements are only issued for manufacturing defects reported with an uncut **Unboxing Video** within 24 hours of delivery. Verification is mandatory.", "Tags and original 2026 packaging must be intact. Items showing any signs of wear will be rejected."] },
+                    'policy-shipping': { t: 'Shipping Hub', c: ["We provide express PAN India delivery via premium logistics for all drops.", "**Free Shipping** for orders above ₹999. Standard shipping rate is ₹70.", "Dispatch: Within 48 hours of payment log verification. Delivery Window: **4 to 7 business days** across all hubs."] },
+                    'policy-terms': { t: 'Terms of Service', c: ["The Lit Foundation is a **Prepaid Only Hub**. COD is strictly disabled for all 2026 collections.", "Confirmed orders cannot be cancelled or modified once logged in our automated system.", "Correct dispatch information is the client's sole responsibility. We are not liable for log failures."] }
+                };
+                const p = pols[vid];
+                c.innerHTML = `<div class="p-10 py-32 lg:max-w-4xl lg:mx-auto fade-in text-left"><h1 class="text-5xl font-black italic mb-16 uppercase border-l-8 border-rose-600 pl-8 leading-none tracking-tighter">${p.t}</h1><div class="space-y-12 text-gray-400 text-[16px] leading-loose font-medium italic">${p.c.map(t => `<p>${t.replace(/\*\*(.*?)\*\*/g, '<b class="text-black">$1</b>')}</p>`).join('')}</div><button onclick="showView('home')" class="mt-20 btn-black px-12 py-4 italic text-[10px]">Return Home</button></div>`;
+            } else if(vid === 'contact') {
+                c.innerHTML = `<div class="p-10 py-32 lg:max-w-2xl lg:mx-auto fade-in text-left"><h2 class="text-6xl font-black italic mb-20 uppercase tracking-tighter border-l-8 border-rose-600 pl-8 leading-none">Support</h2><div class="space-y-16"><div class="space-y-4"><p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-300 italic">Official WhatsApp Hub</p><a href="https://wa.me/917756810120" target="_blank" class="text-3xl font-black hover:text-rose-600 transition-colors italic tracking-tighter">+91 77568 10120</a></div><div class="space-y-4"><p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-300 italic">Instagram Direct Portfolio</p><a href="https://www.instagram.com/thelitfoundation?igsh=dGNkcXlxaWV6aXVq" target="_blank" class="text-3xl font-black hover:text-rose-600 transition-colors italic tracking-tighter">@thelitfoundation</a></div></div></div>`;
+            } else if(vid === 'faq') {
+                c.innerHTML = `<div class="p-10 py-32 lg:max-w-2xl lg:mx-auto fade-in text-left"><h2 class="text-6xl font-black italic mb-20 uppercase tracking-tighter border-l-8 border-rose-600 pl-8 leading-none">FAQ Hub</h2><div class="space-y-12">${[{q:"Return window?", a:"24h with unboxing video for manufacturing defects only."}, {q:"COD Availability?", a:"Strictly Prepaid hub for the 2026 season drops."}, {q:"Dispatch Time?", a:"Logged verification in 48h. Delivery takes 4-7 business days PAN India."}].map(f => `<div class="border-b border-gray-50 pb-12"><h4 class="text-xs font-black uppercase italic mb-5 tracking-widest">${f.q}</h4><p class="text-[12px] text-gray-400 font-bold uppercase leading-relaxed italic">${f.a}</p></div>`).join('')}</div></div>`;
+            }
+        }
+
+        // --- Core Functions ---
+        function handleTilt(e) {
+            const tilt = document.querySelector('.hero-tilt');
+            const { innerWidth, innerHeight } = window;
+            const x = (e.clientX - innerWidth / 2) / 25;
+            const y = (e.clientY - innerHeight / 2) / 25;
+            tilt.style.transform = `rotateX(${-y}deg) rotateY(${x}deg) scale(1.05)`;
+        }
+
+        function scrollTeams(amt) {
+            document.getElementById('team-scroller').scrollBy({ left: amt, behavior: 'smooth' });
+        }
+
+        function setDetailSize(s, el) {
+            curSize = s;
+            Array.from(el.parentNode.children).forEach(b => b.classList.replace('bg-black', 'bg-transparent'));
+            Array.from(el.parentNode.children).forEach(b => b.classList.replace('text-white', 'text-gray-400'));
+            Array.from(el.parentNode.children).forEach(b => b.style.borderColor = '#f3f4f6');
+            el.classList.replace('bg-transparent', 'bg-black');
+            el.classList.replace('text-gray-400', 'text-white');
+            el.style.borderColor = '#000';
+                                    }
+        function toggleDesc() {
+            const box = document.getElementById('desc-box');
+            const ico = document.getElementById('desc-ico');
+            if(box.style.maxHeight === '85px' || !box.style.maxHeight) {
+                box.style.maxHeight = '1000px'; ico.style.transform = 'rotate(180deg)';
+            } else { box.style.maxHeight = '85px'; ico.style.transform = 'rotate(0deg)'; }
+        }
+
+        function addToBag(id) {
+            const p = PRODUCTS.find(x => x.id === id);
+            cart.push({ ...p, size: curSize });
+            updateCartUI(); toggleCart(true);
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cart-items');
+            list.innerHTML = cart.map((i, idx) => `
+                <div class="flex gap-4 p-4 border border-gray-50 rounded-2xl">
+                    <img src="${i.img}" class="w-16 h-20 object-cover rounded-xl shadow-sm">
+                    <div class="flex-1 text-left">
+                        <p class="text-[8px] font-black text-rose-600 uppercase mb-1 tracking-widest">${i.team} Drop</p>
+                        <p class="text-[11px] font-black uppercase italic text-black leading-tight">${i.name} (${i.size})</p>
+                        <div class="flex justify-between items-center mt-5">
+                            <span class="font-black text-sm">₹${i.price}</span>
+                            <button onclick="cart.splice(${idx},1); updateCartUI();" class="text-[9px] font-black text-gray-300 uppercase italic">Remove</button>
+                        </div>
                     </div>
                 </div>
             `).join('');
+            const sum = cart.reduce((a,b)=>a+b.price, 0);
+            document.getElementById('cart-total').innerText = `₹${sum}`;
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-count').classList.toggle('hidden', cart.length === 0);
+            document.getElementById('cart-footer').classList.toggle('hidden', cart.length === 0);
         }
 
-        // Product Modal
-        function openProduct(id) {
-            const p = products.find(x => x.id === id);
-            document.getElementById('modal-img').src = p.img1;
-            document.getElementById('modal-title').textContent = p.name;
-            document.getElementById('modal-price').textContent = `₹${p.price}`;
-            
-            document.getElementById('modal-add-btn').onclick = () => { addToCart(p.id); closeProductModal(); };
-            document.getElementById('modal-buy-btn').onclick = () => { closeProductModal(); buyNow(p.id); };
-            
-            document.getElementById('product-modal').classList.remove('hidden');
-            document.getElementById('product-modal').classList.add('flex');
-        }
-        function closeProductModal() {
-            document.getElementById('product-modal').classList.add('hidden');
-            document.getElementById('product-modal').classList.remove('flex');
-        }
+        function toggleMenu(o) { document.getElementById('nav-drawer').classList.toggle('drawer-open', o); }
+        function toggleCart(o) { document.getElementById('cart-drawer').classList.toggle('cart-open', o); document.getElementById('cart-overlay').classList.toggle('hidden', !o); }
 
-        // Cart Logic
-        function addToCart(id) {
-            const p = products.find(x => x.id === id);
-            const existing = cart.find(x => x.id === id);
-            if(existing) existing.qty += 1;
-            else cart.push({...p, qty: 1});
-            
-            saveCart();
-            toggleCart(true);
-        }
-        function buyNow(id) {
-            cart = []; // Clear for direct buy
-            const p = products.find(x => x.id === id);
-            cart.push({...p, qty: 1});
-            saveCart();
-            startCheckout();
-        }
-        function updateQty(id, delta) {
-            const item = cart.find(x => x.id === id);
-            if(item) {
-                item.qty += delta;
-                if(item.qty <= 0) cart = cart.filter(x => x.id !== id);
-                saveCart();
-            }
-        }
-        function saveCart() {
-            localStorage.setItem('thelit_cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-        
-        // Cart UI
-        function updateCartUI() {
-            const count = cart.reduce((sum, item) => sum + item.qty, 0);
-            document.getElementById('cart-count').textContent = count;
-            
-            const container = document.getElementById('cart-items');
-            if(cart.length === 0) {
-                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-gray-400 space-y-4">
-                    <i class="fa-solid fa-bag-shopping text-4xl"></i>
-                    <p class="uppercase tracking-widest text-sm">Your shopping cart is empty.</p>
-                </div>`;
-                document.getElementById('cart-total').textContent = '₹0';
-                return;
-            }
+        function startCheckout() { checkoutStep = 1; toggleCart(false); showView('checkout'); }
 
-            let total = 0;
-            container.innerHTML = cart.map(item => {
-                total += item.price * item.qty;
-                return `
-                <div class="flex gap-4 border-b border-gray-100 pb-4">
-                    <img src="${item.img1}" class="w-20 h-20 object-contain bg-cream rounded-xl">
-                    <div class="flex-1 flex flex-col justify-between">
-                        <div>
-                            <h4 class="font-serif text-lg leading-tight">${item.name}</h4>
-                            <p class="text-sm font-medium mt-1">₹${item.price}</p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-2">
-                            <div class="flex items-center border border-gray-200 rounded-full px-2">
-                                <button onclick="updateQty(${item.id}, -1)" class="px-2 py-1 hover:text-gray-500">-</button>
-                                <span class="text-xs px-2 font-medium">${item.qty}</span>
-                                <button onclick="updateQty(${item.id}, 1)" class="px-2 py-1 hover:text-gray-500">+</button>
+        // --- 6-STEP CHECKOUT SYSTEM (FLIPKART STYLE) ---
+        function renderCheckoutSystem() {
+            const c = document.getElementById('main-content');
+            const sum = cart.reduce((a,b)=>a+b.price, 0);
+
+            if(checkoutStep === 1) {
+                c.innerHTML = `
+                    <div class="p-6 max-w-lg mx-auto py-20 fade-in text-left">
+                        <div class="flex justify-between items-end mb-16 border-b border-gray-100 pb-8"><h2 class="text-3xl font-black italic uppercase tracking-tighter leading-none">Shipping Log</h2><span class="text-[10px] font-bold text-gray-300 uppercase">Step 1/6</span></div>
+                        <div class="space-y-4">
+                            <input id="f-name" type="text" placeholder="Recipient Full Name" value="${uData.n||''}">
+                            <input id="f-phone" type="tel" placeholder="WhatsApp Number (Log Contact)" value="${uData.p||''}">
+                            <input id="f-alt" type="tel" placeholder="Alternate Number (Optional)" value="${uData.a||''}">
+                            <input id="f-pin" type="text" placeholder="Pincode (Area Hub)" value="${uData.i||''}">
+                            <div class="grid grid-cols-2 gap-4">
+                                <input id="f-city" type="text" placeholder="City" value="${uData.c||''}">
+                                <select id="f-state" class="p-4"><option>Select State Hub</option><option>Maharashtra</option><option>Delhi</option><option>Karnataka</option><option>Gujarat</option><option>Uttar Pradesh</option><option>Punjab</option><option>West Bengal</option></select>
                             </div>
+                            <textarea id="f-addr" placeholder="House No, Building, Road Details" rows="3">${uData.d||''}</textarea>
+                            <input id="f-land" type="text" placeholder="Landmark (Near Hub)" value="${uData.l||''}">
+                            <button onclick="saveCheckStep1()" class="w-full btn-black py-5 text-[10px] mt-8 italic shadow-2xl">Confirm Log Address</button>
                         </div>
                     </div>
-                </div>
-            `}).join('');
-            document.getElementById('cart-total').textContent = `₹${total}`;
-        }
-
-        // Drawers
-        function toggleCart(forceOpen = false) {
-            const drawer = document.getElementById('cart-drawer');
-            const overlay = document.getElementById('cart-overlay');
-            const isOpen = !drawer.classList.contains('translate-x-full');
-            
-            if (isOpen && !forceOpen) {
-                drawer.classList.add('translate-x-full');
-                drawer.classList.remove('translate-x-0');
-                overlay.classList.add('opacity-0', 'pointer-events-none');
-            } else {
-                drawer.classList.remove('translate-x-full');
-                drawer.classList.add('translate-x-0');
-                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                `;
+            } else if(checkoutStep === 2) {
+                c.innerHTML = `
+                    <div class="p-6 max-w-lg mx-auto py-20 fade-in text-left">
+                        <div class="flex justify-between items-end mb-16 border-b border-gray-100 pb-8"><h2 class="text-3xl font-black italic uppercase tracking-tighter leading-none">Review</h2><span class="text-[10px] font-bold text-gray-300 uppercase">Step 2/6</span></div>
+                        <div class="p-10 border border-gray-100 mb-10 space-y-8 rounded-[3rem] shadow-sm">
+                            <div class="space-y-5">${cart.map(i => `<div class="flex justify-between text-[11px] font-black uppercase text-gray-400"><span>${i.name} (${i.size})</span><span class="text-black">₹${i.price}</span></div>`).join('')}</div>
+                            <div class="flex justify-between text-3xl font-black border-t border-gray-50 pt-10 italic tracking-tighter leading-none"><span>Total Log</span><span>₹${sum}</span></div>
+                        </div>
+                        <button onclick="checkoutStep=3; renderCheckoutSystem()" class="w-full btn-black py-5 text-[10px] italic shadow-2xl">Proceed to Payment</button>
+                    </div>
+                `;
+            } else if(checkoutStep === 3) {
+                c.innerHTML = `
+                    <div class="p-6 max-w-lg mx-auto py-20 fade-in text-center">
+                        <div class="flex justify-between items-end mb-16 border-b border-gray-100 pb-8 text-left"><h2 class="text-3xl font-black italic uppercase tracking-tighter leading-none text-left">Scan Hub</h2><span class="text-[10px] font-bold text-gray-300 uppercase">Step 3/6</span></div>
+                        <div class="p-6 bg-white rounded-[3.5rem] mx-auto w-fit shadow-2xl border-4 border-black mb-12 group hover:scale-105 transition-transform duration-700">
+                            <img src="https://ik.imagekit.io/h9qdzohx9/IMG-20260325-WA0021.jpg" class="w-64 rounded-[2rem]">
+                        </div>
+                        <p class="text-[12px] font-black uppercase italic mb-12 tracking-[0.4em]">Scan to Pay ₹${sum}</p>
+                        <button onclick="checkoutStep=4; renderCheckoutSystem()" class="w-full bg-rose-600 text-white py-5 font-black uppercase text-[10px] tracking-widest italic shadow-2xl active:scale-95">I Have Paid • Upload Proof</button>
+                    </div>
+                `;
+            } else if(checkoutStep === 4) {
+                c.innerHTML = `
+                    <div class="p-6 max-w-lg mx-auto py-20 fade-in text-center">
+                        <div class="flex justify-between items-end mb-16 border-b border-gray-100 pb-8 text-left"><h2 class="text-3xl font-black italic uppercase tracking-tighter leading-none text-left">Upload Log</h2><span class="text-[10px] font-bold text-gray-300 uppercase">Step 4/6</span></div>
+                        <div class="border-2 border-dashed border-gray-100 p-20 rounded-[4rem] mb-12 flex flex-col items-center">
+                            <label class="cursor-pointer btn-black px-12 py-4 italic shadow-2xl">Upload Screenshot <input type="file" class="hidden" onchange="handleProofUploadFlow(event)"></label>
+                            <p id="up-log" class="mt-10 text-[10px] font-black uppercase text-gray-300 italic tracking-[0.2em]">Transaction Proof Required</p>
+                        </div>
+                        <button id="nxt-bt" disabled onclick="checkoutStep=5; renderCheckoutSystem()" class="w-full btn-black py-5 text-[10px] opacity-20 italic">Continue to Finalize</button>
+                    </div>
+                `;
+            } else if(checkoutStep === 5) {
+                c.innerHTML = `
+                    <div class="p-6 max-w-lg mx-auto py-20 fade-in text-left">
+                        <div class="flex justify-between items-end mb-16 border-b border-gray-100 pb-8"><h2 class="text-3xl font-black italic uppercase tracking-tighter leading-none">Confirm</h2><span class="text-[10px] font-bold text-gray-300 uppercase">Step 5/6</span></div>
+                        <div class="border border-gray-100 p-10 space-y-10 rounded-[3rem] shadow-sm mb-12 text-[11px] font-black uppercase italic tracking-widest">
+                            <div class="space-y-2"><p class="text-gray-300 tracking-[0.5em]">Client Portfolio</p><p class="text-black text-sm">${uData.n}</p></div>
+                            <div class="space-y-2"><p class="text-gray-300 tracking-[0.5em]">Dispatch Hub</p><p class="text-gray-400 leading-relaxed">${uData.d}, ${uData.c}</p></div>
+                            <div class="pt-10 border-t border-gray-50 flex items-center gap-10">
+                                <img src="${sUrl}" class="w-20 h-24 object-cover rounded-2xl shadow-2xl border-2 border-black">
+                                <span class="italic tracking-tighter text-rose-600">✓ Log Verified</span>
+                            </div>
+                        </div>
+                        <button id="sub-bt" onclick="submitOfficialDrop()" class="w-full btn-black py-6 text-[11px] italic shadow-2xl">Submit Official Drop Log</button>
+                    </div>
+                `;
+            } else if(checkoutStep === 6) {
+                c.innerHTML = `
+                    <div class="p-6 max-w-lg mx-auto py-40 fade-in text-center">
+                        <div class="mx-auto text-black mb-12"><svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div>
+                        <h2 class="text-6xl font-black uppercase italic tracking-tighter leading-none mb-10">Order Secured</h2>
+                        <p class="text-[12px] font-black text-gray-300 tracking-[0.3em] uppercase px-12 leading-loose italic">The Lit Foundation has secured your 2026 gear drop. Verification takes 24-48h. STAY LIT.</p>
+                        <button onclick="location.reload()" class="btn-black px-16 py-6 text-[10px] mt-20 italic rounded-full shadow-2xl">Return to Hub</button>
+                    </div>
+                `;
             }
         }
 
-        document.getElementById('cart-overlay').addEventListener('click', () => toggleCart());
-
-        // Checkout Flow
-        let checkoutData = {};
-
-        function startCheckout() {
-            if(cart.length === 0) { alert('Cart is empty!'); return; }
-            toggleCart(); // close cart
-            
-            // Build summary
-            const summaryContainer = document.getElementById('co-summary-items');
-            let total = 0;
-            summaryContainer.innerHTML = cart.map(i => {
-                total += i.price * i.qty;
-                return `<div class="flex justify-between"><span class="text-gray-600">${i.name} (x${i.qty})</span><span>₹${i.price * i.qty}</span></div>`;
-            }).join('');
-            
-            document.getElementById('co-summary-total').textContent = `₹${total}`;
-            document.getElementById('qr-amount').textContent = `₹${total}`;
-            checkoutData.totalAmount = total;
-            
-            document.getElementById('checkout-modal').classList.remove('hidden');
-            document.getElementById('checkout-modal').classList.add('flex');
-            nextStep(1);
+        function saveCheckStep1() {
+            uData = { n: document.getElementById('f-name').value, p: document.getElementById('f-phone').value, a: document.getElementById('f-alt').value, i: document.getElementById('f-pin').value, c: document.getElementById('f-city').value, d: document.getElementById('f-addr').value };
+            if(!uData.n || !uData.p || !uData.d || !uData.i) return;
+            checkoutStep = 2; renderCheckoutSystem();
         }
 
-        function closeCheckout(clearCart = false) {
-            document.getElementById('checkout-modal').classList.add('hidden');
-            document.getElementById('checkout-modal').classList.remove('flex');
-            if(clearCart) {
-                cart = [];
-                saveCart();
-            }
-            // reset file input
-            document.getElementById('co-screenshot').value = '';
-            document.getElementById('upload-preview').classList.add('hidden');
-            document.getElementById('upload-prompt').classList.remove('hidden');
-        }
-
-        function nextStep(step) {
-            if(step === 2) {
-                // Validate step 1
-                const name = document.getElementById('co-name').value;
-                const email = document.getElementById('co-email').value;
-                const phone = document.getElementById('co-phone').value;
-                const addr = document.getElementById('co-address').value;
-                if(!name || !email || !phone || !addr) { alert('Please fill all details.'); return; }
-                checkoutData.customer = {name, email, phone, addr};
-            }
-
-            for(let i=1; i<=5; i++) {
-                document.getElementById(`step-${i}`).classList.add('hidden');
-            }
-            document.getElementById(`step-${step}`).classList.remove('hidden');
-            
-            if(step === 5) {
-                document.getElementById('checkout-title').textContent = "Success";
-            } else {
-                document.getElementById('checkout-title').textContent = "Secure Checkout";
-            }
-        }
-
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('upload-preview').src = e.target.result;
-                    document.getElementById('upload-preview').classList.remove('hidden');
-                    document.getElementById('upload-prompt').classList.add('hidden');
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        // Process Order (Cloudinary + Formspree)
-        async function processOrder() {
-            const fileInput = document.getElementById('co-screenshot');
-            if (!fileInput.files || fileInput.files.length === 0) {
-                alert('Please upload a screenshot of your payment.');
-                return;
-            }
-
-            const btnText = document.querySelector('#btn-submit-order span');
-            const loader = document.getElementById('submit-loader');
-            btnText.textContent = "Processing...";
-            loader.classList.remove('hidden');
-
+        async function handleProofUploadFlow(e) {
+            const f = e.target.files[0]; const log = document.getElementById('up-log'); const btn = document.getElementById('nxt-bt');
+            log.innerText = 'Syncing Log to Hub...';
+            const fd = new FormData(); fd.append('file', f); fd.append('upload_preset', 'thelit_upload');
             try {
-                // 1. Upload to Cloudinary
-                const formData = new FormData();
-                formData.append('file', fileInput.files[0]);
-                formData.append('upload_preset', 'thelit_upload');
-
-                const cloudRes = await fetch('https://api.cloudinary.com/v1_1/dsa7pugor/image/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                if(!cloudRes.ok) throw new Error('Image upload failed');
-                const cloudData = await cloudRes.json();
-                const screenshotUrl = cloudData.secure_url;
-
-                // 2. Prepare order data
-                const orderItems = cart.map(i => `${i.name} (x${i.qty})`).join(', ');
-                const formspreeData = {
-                    name: checkoutData.customer.name,
-                    email: checkoutData.customer.email,
-                    phone: checkoutData.customer.phone,
-                    address: checkoutData.customer.addr,
-                    order_items: orderItems,
-                    total_amount: checkoutData.totalAmount,
-                    payment_screenshot: screenshotUrl
-                };
-
-                // 3. Send to Formspree
-                const formRes = await fetch('https://formspree.io/f/xpqynony', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formspreeData)
-                });
-
-                if(!formRes.ok) throw new Error('Order submission failed');
-
-                // Success
-                nextStep(5);
-
-            } catch (error) {
-                alert('There was an error processing your order. Please try again or contact support.');
-                console.error(error);
-            } finally {
-                btnText.textContent = "Submit Order";
-                loader.classList.add('hidden');
-            }
+                const res = await fetch('https://api.cloudinary.com/v1_1/dsa7pugor/image/upload', { method: 'POST', body: fd });
+                const d = await res.json(); sUrl = d.secure_url;
+                log.innerHTML = '<span class="text-black tracking-widest font-black">✓ Payment Log Synchronized</span>';
+                btn.disabled = false; btn.classList.remove('opacity-20');
+            } catch(e) { log.innerText = 'Sync Error. Try again.'; }
         }
+
+        async function submitOfficialDrop() {
+            const btn = document.getElementById('sub-bt'); btn.innerText = 'Syncing Log...'; btn.disabled = true;
+            const body = { ...uData, items: cart.map(i => `${i.name} (${i.size})`).join(', '), total: document.getElementById('cart-total').innerText, proof: sUrl, date: new Date().toLocaleString() };
+            try {
+                await fetch('https://formspree.io/f/xpqynony', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+                checkoutStep = 6; renderCheckoutSystem();
+            } catch(e) { btn.innerText = 'Sync Error. Try again.'; btn.disabled = false; }
+        }
+
+        window.onload = () => showView('home');
     </script>
 </body>
 </html>
