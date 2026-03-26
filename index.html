@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THE LIT FOUNDATION | OFFICIAL STORE</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables & Base Styling */
+        :root { --accent: #000000; --bg: #ffffff; --text: #111827; --border: #e5e7eb; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* Marquee Animation */
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { animation: marquee 15s linear infinite; display: flex; width: max-content; }
+        
+        /* Drawer Animations */
+        .drawer { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform: translateX(-100%); z-index: 250; }
+        .drawer-open { transform: translateX(0); }
+        .cart-drawer { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform: translateX(100%); z-index: 250; }
+        .cart-open { transform: translateX(0); }
+        
+        /* Fade in effect */
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Premium Form Elements */
+        input, textarea, select { 
+            border: 1px solid #d1d5db !important; 
+            padding: 14px 16px !important; 
+            width: 100%; 
+            border-radius: 8px !important; 
+            background: #f9fafb !important; 
+            color: #111827 !important; 
+            outline: none; 
+            font-size: 14px !important; 
+            transition: all 0.2s ease;
+            appearance: none;
+        }
+        input:focus, textarea:focus, select:focus { border-color: #000 !important; background: #fff !important; box-shadow: 0 0 0 4px rgba(0,0,0,0.05) !important; }
+        
+        /* Premium Buttons */
+        .btn-premium { background: #000; color: #fff; padding: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.3s; border-radius: 8px; font-size: 14px; border: 1px solid #000; cursor: pointer; text-align: center; display: block; }
+        .btn-premium:hover:not(:disabled) { background: #fff; color: #000; }
+        .btn-premium:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-secondary { background: #fff; color: #000; padding: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.3s; border-radius: 8px; font-size: 14px; border: 1px solid #d1d5db; cursor: pointer; text-align: center; display: block; }
+        .btn-secondary:hover { border-color: #000; }
+        
+        /* Product Card Styling */
+        .product-card { background: #fff; transition: all 0.3s; position: relative; border-radius: 12px; overflow: hidden; border: 1px solid #f3f4f6; }
+        .product-card:hover { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); border-color: #e5e7eb; }
+        .product-title { font-size: 13px; font-weight: 600; color: #111827; line-height: 1.4; margin-top: 12px; }
+        .price-tag-new { font-size: 15px; font-weight: 700; color: #000; }
+        .price-tag-old { font-size: 12px; text-decoration: line-through; color: #9ca3af; }
+        
+        /* Search Overlay */
+        .search-overlay { display: none; background: rgba(255,255,255,0.98); z-index: 400; position: fixed; inset: 0; padding: 20px; }
+        .search-active { display: block; animation: fadeIn 0.3s forwards; }
+        
+        /* Image Gallery Dots */
+        .gallery-dot { height: 6px; width: 6px; background: #d1d5db; border-radius: 50%; transition: all 0.3s; }
+        .gallery-dot.active { background: #000; width: 24px; border-radius: 10px; }
+
+        .label-small { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7280; }
+        .heading-medium { font-size: 22px; font-weight: 700; color: #111827; letter-spacing: -0.01em; }
+
+        /* Checkout Progress Steps */
+        .step-indicator { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+        .step-active { background: #000; color: #fff; }
+        .step-pending { background: #f3f4f6; color: #9ca3af; }
+        .step-completed { background: #10b981; color: #fff; }
+        .step-line { height: 2px; flex: 1; background: #f3f4f6; margin: 0 8px; }
+        .step-line-active { background: #000; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Marquee Banner -->
+    <div class="bg-black py-2.5 overflow-hidden sticky top-0 z-[200]">
+        <div class="animate-marquee text-[11px] font-medium tracking-wide uppercase text-white">
+            <span class="mx-10">Pan India Delivery • Premium Quality • 100% Secure Checkout</span>
+            <span class="mx-10">Prepaid Orders Only • Free Shipping on Premium Drops</span>
+            <span class="mx-10">Pan India Delivery • Premium Quality • 100% Secure Checkout</span>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-gray-200 h-16 sticky top-[38px] z-[150] shadow-sm">
+        <div class="container mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleMenu(true)" class="p-2 -ml-2 text-black"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+                <div onclick="showView('home')" class="flex items-center gap-1 cursor-pointer font-bold text-xl uppercase tracking-tight text-black">
+                    <span>THE</span><span class="text-rose-600">LIT</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="toggleSearch(true)" class="p-2 text-black"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+                <div onclick="toggleCart(true)" class="relative p-2 cursor-pointer text-black">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span id="cart-count" class="absolute top-0 right-0 bg-rose-600 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center hidden">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Overlay Menu -->
+    <div id="search-overlay" class="search-overlay">
+        <div class="flex justify-between items-center mb-8 pt-4">
+            <h2 class="text-xl font-bold uppercase text-black">Search Products</h2>
+            <button onclick="toggleSearch(false)" class="text-black"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+        </div>
+        <div class="relative">
+            <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input id="search-input" type="text" placeholder="Search for jerseys, teams..." oninput="handleSearch(this.value)" class="pl-12 bg-white !border-gray-300 shadow-sm">
+        </div>
+        <div id="search-results" class="grid grid-cols-2 lg:grid-cols-5 gap-4 mt-8 overflow-y-auto no-scrollbar max-h-[70vh]"></div>
+    </div>
+
+    <!-- Main Sidebar Drawer -->
+    <div id="nav-drawer" class="drawer fixed inset-0 bg-white flex flex-col p-8 text-black shadow-2xl">
+        <div class="flex justify-between items-center mb-10 border-b border-gray-100 pb-6">
+            <div class="text-xl font-bold uppercase">THE <span class="text-rose-600">LIT</span></div>
+            <button onclick="toggleMenu(false)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+        </div>
+        <nav class="flex flex-col gap-6 font-semibold uppercase text-sm tracking-wide">
+            <span onclick="showView('home')" class="hover:text-gray-500 cursor-pointer transition-colors">Home</span>
+            <div class="h-px bg-gray-100 my-2"></div>
+            <span onclick="showView('premium')" class="hover:text-gray-500 cursor-pointer">Premium Collection</span>
+            <span onclick="showView('crimson')" class="hover:text-gray-500 cursor-pointer">Crimson Edition</span>
+            <span onclick="showView('ipl')" class="hover:text-gray-500 cursor-pointer">IPL Drops</span>
+            <span onclick="showView('jerseys')" class="hover:text-gray-500 cursor-pointer">Elite Jerseys</span>
+            <span onclick="showView('shorts')" class="hover:text-gray-500 cursor-pointer">Shorts</span>
+            <span onclick="showView('accessories')" class="hover:text-gray-500 cursor-pointer">Accessories</span>
+            <div class="h-px bg-gray-100 my-2"></div>
+            <span onclick="showView('faq')" class="text-gray-500 hover:text-black cursor-pointer">Help & FAQs</span>
+        </nav>
+        <div class="mt-auto flex gap-6 pt-8 border-t border-gray-100 text-black">
+            <a href="https://www.instagram.com/thelitfoundation" target="_blank" class="hover:opacity-70"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
+            <a href="https://wa.me/917756810120" target="_blank" class="hover:opacity-70"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+        </div>
+    </div>
+
+    <!-- Cart Drawer Window -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[200] hidden" onclick="toggleCart(false)"></div>
+    <div id="cart-drawer" class="cart-drawer fixed right-0 top-0 bottom-0 w-full max-w-sm bg-white flex flex-col p-6 shadow-2xl">
+        <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+            <h2 class="text-base font-bold uppercase tracking-wide text-black">Your Cart</h2>
+            <button onclick="toggleCart(false)" class="text-black"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto space-y-4 no-scrollbar">
+            <!-- Empty state JS -->
+        </div>
+        <div id="cart-footer" class="pt-6 border-t border-gray-100 hidden bg-white">
+            <div class="flex justify-between mb-4"><span class="text-sm font-medium text-gray-500">Subtotal</span><span id="cart-total" class="font-bold text-lg text-black">₹0</span></div>
+            <p class="text-xs text-gray-500 mb-4 text-center">Taxes and shipping calculated at checkout.</p>
+            <button onclick="startCheckout()" class="w-full btn-premium">Checkout Now</button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="min-h-screen bg-gray-50/30"></main>
+
+    <!-- Footer Section -->
+    <footer class="bg-white border-t border-gray-200 py-16 px-6 mt-12 text-left">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-black">
+            <div class="space-y-6">
+                <h3 class="font-bold text-sm uppercase tracking-wider text-black">Shop Categories</h3>
+                <div class="flex flex-col gap-3 text-sm text-gray-600">
+                    <span onclick="showView('premium')" class="cursor-pointer hover:text-black transition-colors">Premium Collection</span>
+                    <span onclick="showView('crimson')" class="cursor-pointer hover:text-black transition-colors">Crimson Edition</span>
+                    <span onclick="showView('ipl')" class="cursor-pointer hover:text-black transition-colors">IPL Drops</span>
+                    <span onclick="showView('shorts')" class="cursor-pointer hover:text-black transition-colors">Shorts</span>
+                    <span onclick="showView('accessories')" class="cursor-pointer hover:text-black transition-colors">Accessories</span>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h3 class="font-bold text-sm uppercase tracking-wider text-black">Customer Service</h3>
+                <div class="flex flex-col gap-3 text-sm text-gray-600">
+                    <span onclick="showView('faq')" class="cursor-pointer hover:text-black transition-colors">Help & FAQs</span>
+                    <span onclick="showView('policy-shipping')" class="cursor-pointer hover:text-black transition-colors">Shipping Policy</span>
+                    <span onclick="showView('policy-return')" class="cursor-pointer hover:text-black transition-colors">Returns & Refunds</span>
+                    <span onclick="showView('policy-privacy')" class="cursor-pointer hover:text-black transition-colors">Privacy Policy</span>
+                    <span onclick="showView('policy-terms')" class="cursor-pointer hover:text-black transition-colors">Terms of Service</span>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h3 class="font-bold text-sm uppercase tracking-wider text-black">Connect With Us</h3>
+                <div class="flex gap-6 mb-6">
+                    <a href="https://www.instagram.com/thelitfoundation" target="_blank" class="text-gray-600 hover:text-black transition-colors"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
+                    <a href="https://wa.me/917756810120" target="_blank" class="text-gray-600 hover:text-black transition-colors"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+                </div>
+                <p class="text-xs text-gray-500 leading-relaxed">Questions? Reach out via WhatsApp or Instagram. We typically respond within 24 hours.</p>
+            </div>
+            <div class="flex flex-col md:items-end justify-center md:text-right">
+                <div class="text-2xl font-bold uppercase tracking-tight text-black">THE <span class="text-rose-600">LIT</span></div>
+                <p class="text-[10px] font-semibold tracking-[0.2em] text-gray-500 uppercase mt-2">Official Merchandise</p>
+                <p class="text-xs text-gray-400 mt-6">© 2026 The Lit Foundation. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // All Products Data
+        const PRODUCTS = [
+            // PREMIUM (10)
+            { id: 401, cat: 'premium', name: 'Maldini Legacy Edition', price: 599, oldPrice: 1299, 
+              imgs: ['https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-11-58-49_6012fa4d4ddec268fc5c7112cbb265e7.jpg', 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-12-01-40_6012fa4d4ddec268fc5c7112cbb265e7.jpg'],
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-11-58-49_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Legendary AC Milan pride. Gold-stitched detailing on elite performance knit. Tailored for a premium fit." },
+            { id: 402, cat: 'premium', name: 'AC Milan Special Edition', price: 599, oldPrice: 1299, 
+              imgs: ['https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-16-05-78_6012fa4d4ddec268fc5c7112cbb265e7.jpg', 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-16-07-78_6012fa4d4ddec268fc5c7112cbb265e7.jpg'],
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-16-05-78_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Rossoneri red and black pride. Advanced carbon-fiber textured knit for breathability and style." },
+            { id: 403, cat: 'premium', name: 'Baggio Retro Classic', price: 599, oldPrice: 1299, 
+              imgs: ['https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-18-53-53_6012fa4d4ddec268fc5c7112cbb265e7.jpg', 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-18-56-11_6012fa4d4ddec268fc5c7112cbb265e7.jpg'],
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-18-53-53_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "The divine ponytail throwback. Heritage aesthetic combined with modern moisture-wicking technology." },
+            { id: 404, cat: 'premium', name: 'Champions Trophy Elite 2025', price: 599, oldPrice: 1299, 
+              imgs: ['https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-20-53-17_6012fa4d4ddec268fc5c7112cbb265e7.jpg', 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-20-55-45_6012fa4d4ddec268fc5c7112cbb265e7.jpg'],
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-20-53-17_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Designed for champions. High-impact fabric built for intensity on and off the field." },
+            { id: 405, cat: 'premium', name: 'Özil Vintage Edition', price: 599, oldPrice: 1299, 
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-23-29-05_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Assist king tribute. Clean clinical vision translated into a minimalist, premium fabric design." },
+            { id: 406, cat: 'premium', name: 'Kroos Masterclass Edition', price: 599, oldPrice: 1299, 
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-25-01-86_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "German precision. Clinical midfield control design with exceptional tailored fit." },
+            { id: 407, cat: 'premium', name: 'Haaland Power Edition', price: 599, oldPrice: 1299, 
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-25-51-85_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Unstoppable force performance. Constructed from high-compression fibers for athletic dominance." },
+            { id: 408, cat: 'premium', name: 'Zidane Icon Edition', price: 599, oldPrice: 1299, 
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-26-50-81_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Elegance in motion. A timeless icon series piece representing football heritage." },
+            { id: 409, cat: 'premium', name: 'Henry Legacy Classic', price: 599, oldPrice: 1299, 
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-27-57-05_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "King of Highbury legacy. Designed for speed, finesse, and absolute comfort." },
+            { id: 410, cat: 'premium', name: 'New Era Premium Edition', price: 599, oldPrice: 1299, 
+              img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-53-44-02_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Where urban culture meets athletic technology. The definitive future drop series." },
+
+            // CRIMSON (8)
+            { id: 301, cat: 'crimson', name: 'Crimson Heritage Jersey', price: 399, oldPrice: 799, img: 'https://ik.imagekit.io/h9qdzohx9/jaihind_sports_hub-581455442_17985432491875833_7315029316424995913_n.jpg', desc: "Legacy stitched red stripes with modern fabric technology." },
+            { id: 302, cat: 'crimson', name: 'Shadow Pulse Jersey', price: 399, oldPrice: 799, img: 'https://ik.imagekit.io/h9qdzohx9/IMG-20260214-WA0057_1.jpg', desc: "Control the pulse in shadows. Lightweight and breathable." },
+            { id: 303, cat: 'crimson', name: 'Neon Strike Jersey', price: 399, oldPrice: 799, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260324_122649_Instagram.jpg', desc: "High visibility strike design for the bold." },
+            { id: 304, cat: 'crimson', name: 'Arctic Storm Jersey', price: 399, oldPrice: 799, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260324_122602_Instagram.jpg', desc: "Icy blue aggressive fit. Engineered to weather any storm." },
+            { id: 305, cat: 'crimson', name: 'Inferno Blaze Jersey', price: 399, oldPrice: 799, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260324_122551_Instagram.jpg', desc: "Burn the competition with advanced blaze heat-dissipating tech." },
+            { id: 306, cat: 'crimson', name: 'Midnight Phantom', price: 399, oldPrice: 799, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260324_122531_Instagram.jpg', desc: "Stealth midnight black drop. Seamless and comfortable." },
+            { id: 307, cat: 'crimson', name: 'Volt Energy Jersey', price: 399, oldPrice: 799, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260324_122516_Instagram.jpg', desc: "Powered by volt speed design and active stretch fabric." },
+            { id: 308, cat: 'crimson', name: 'Royal Apex Jersey', price: 399, oldPrice: 799, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260324_122454_Instagram.jpg', desc: "Apex leader royal finish. Command the field." },
+
+            // IPL (10)
+            { id: 1, cat: 'ipl', team: 'RCB', name: 'RCB Official Jersey', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/9c0d00dcb984153eb3aa789cf91dcf44.jpg?v=1774385881', desc: "Official Bengaluru Red. Show your team pride." },
+            { id: 2, cat: 'ipl', team: 'CSK', name: 'CSK Official Jersey', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/7dadd0a06d0b35921c85fea8f0d7602a.jpg?v=1774386235', desc: "Yellow Pride Edition. The king of the south." },
+            { id: 7, cat: 'ipl', team: 'MI', name: 'MI Blue Gold Icon', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/695ca7dc284d22732e334e218f342415.jpg?v=1774386473', desc: "Mumbai Iconic Blue and Gold. Five-time champion heritage." },
+            { id: 4, cat: 'ipl', team: 'KKR', name: 'KKR Purple Armor', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/845973ff5021aa7103a745678db33225.jpg?v=1774386439', desc: "Purple gold armor. Play like a true knight." },
+            { id: 3, cat: 'ipl', team: 'RR', name: 'RR Pink Pride', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/b66e0d82265ceeef262458a1a751279d.jpg?v=1774386432', desc: "Rajasthan pink royal finish. Elite comfort." },
+            { id: 5, cat: 'ipl', team: 'SRH', name: 'SRH Orange Army', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/c5c591735d635727a4c46abeff9bc531.jpg?v=1774386445', desc: "Orange Rise army. Support the eagles." },
+            { id: 6, cat: 'ipl', team: 'DC', name: 'DC Blue Roar', price: 350, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-25-16-23-43-90_99c04817c0de5652397fc8b56c3b3817.jpg', desc: "Delhi roaring blue. Capital pride." },
+            { id: 8, cat: 'ipl', team: 'GT', name: 'GT Navy Elite', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/c3c36be6b7dd72c7c429b46a5cc0cf64.jpg?v=1774386467', desc: "Gujarat Titans navy elite. Modern champions." },
+            { id: 9, cat: 'ipl', team: 'LSG', name: 'LSG Teal Official', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/6676585c320cfcc379b8956f029fae6b.jpg?v=1774386453', desc: "Teal Lucknow giants official gear." },
+            { id: 10, cat: 'ipl', team: 'PBKS', name: 'PBKS Power Red', price: 350, oldPrice: 599, img: 'https://cdn.shopify.com/s/files/1/0802/1219/7599/files/7799cbb0dffc9c0a9857b53ea57aebd7.jpg?v=1774386478', desc: "Punjab Sadda power red. Bold and loud." },
+
+            // ELITE JERSEYS (8)
+            { id: 101, cat: 'elite', name: 'Obsidian Strike', price: 450, oldPrice: 899, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-16-01-59-06-25_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Elite performance fibers with a sleek obsidian finish." },
+            { id: 102, cat: 'elite', name: 'Crimson Velocity', price: 450, oldPrice: 899, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-16-01-59-08-50_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Rapid speed velocity knit designed for maximum airflow." },
+            { id: 103, cat: 'elite', name: 'Phantom Shadow', price: 450, oldPrice: 899, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-16-01-59-10-17_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Stealth phantom shadow tech. Unseen until you strike." },
+            { id: 104, cat: 'elite', name: 'Titan Core', price: 450, oldPrice: 899, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-16-01-59-11-87_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Built like a machine. Industrial grade durable weave." },
+            { id: 105, cat: 'elite', name: 'Inferno Pulse', price: 450, oldPrice: 899, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-16-01-59-13-79_6012fa4d4ddec268fc5c7112cbb265e7.jpg', desc: "Heat-reactive pulse design that adapts to your intensity." },
+            { id: 106, cat: 'elite', name: 'Midnight Elite', price: 450, oldPrice: 899, img: 'https://ik.imagekit.io/h9qdzohx9/IMG_20260319_042815.jpg', desc: "Luxury midnight finish silhouette. Premium streetwear crossover." },
+            { id: 107, cat: 'elite', name: 'Stormbreaker', price: 450, oldPrice: 899, img: 'https://ik.imagekit.io/h9qdzohx9/IMG-20260318-WA0015.jpg', desc: "Break limits with storm mesh technology. Ultra-light." },
+            { id: 108, cat: 'elite', name: 'Royal Venom', price: 450, oldPrice: 899, img: 'https://ik.imagekit.io/h9qdzohx9/IMG-20260325-WA0006.jpg', desc: "Dangerously stylish venom weave pattern." },
+
+            // SHORTS & ACCESSORIES (All Included)
+            { id: 201, cat: 'shorts', name: 'Obsidian Core Shorts', price: 299, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260321_194210_Instagram.jpg', desc: "Core performance stretch mesh for total freedom." },
+            { id: 202, cat: 'shorts', name: 'Crimson Edge Shorts', price: 299, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260321_194214_Instagram.jpg', desc: "Sharp edge wicking technology keeps you dry." },
+            { id: 203, cat: 'shorts', name: 'Phantom Drift Shorts', price: 299, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260321_194217_Instagram.jpg', desc: "Lightweight drift motion fabric." },
+            { id: 204, cat: 'shorts', name: 'Titan Flex Shorts', price: 299, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260321_194221_Instagram.jpg', desc: "Titan durability with flex weave." },
+            { id: 205, cat: 'shorts', name: 'Inferno Surge Shorts', price: 299, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260321_194828_Instagram.jpg', desc: "High intensity surge ventilation." },
+            { id: 206, cat: 'shorts', name: 'Midnight Flow Shorts', price: 299, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260321_194930_Instagram.jpg', desc: "Clean flow midnight silhouette." },
+            { id: 207, cat: 'shorts', name: 'Storm Core Shorts', price: 299, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260321_195117_Instagram.jpg', desc: "Reinforced storm core durability." },
+            { id: 208, cat: 'shorts', name: 'Royal Strike Shorts', price: 299, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260321_195249_Instagram.jpg', desc: "Premium matte royal strike design." },
+            
+            { id: 501, cat: 'accessories', name: 'Lit Performance Socks', price: 199, oldPrice: 399, img: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_14-50-51-316.jpg', desc: "Elite anti-slip grip technology socks." },
+            { id: 502, cat: 'accessories', name: 'Pro Wrist Bands', price: 149, oldPrice: 299, img: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_14-50-51-316.jpg', desc: "Absorbent moisture wicking bands." },
+            { id: 503, cat: 'accessories', name: 'Lit Elite Cap', price: 299, oldPrice: 599, img: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_14-50-51-316.jpg', desc: "Structured street cap for fan pride." }
+        ];
+
+        // 6 Collections included (Mobile uses grid-cols-2)
+        const COLLECTIONS = [
+            { t: 'Premium', i: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-23-15-11-58-49_6012fa4d4ddec268fc5c7112cbb265e7.jpg', l: 'premium' },
+            { t: 'IPL Drops', i: 'https://cdn.shopify.com/s/files/1/0739/6599/4038/files/Picsart_26-03-25_14-47-51-475.jpg?v=1774433425', l: 'ipl' },
+            { t: 'Elite Series', i: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_2026-03-16-01-59-06-25_6012fa4d4ddec268fc5c7112cbb265e7.jpg', l: 'jerseys' },
+            { t: 'Crimson', i: 'https://ik.imagekit.io/h9qdzohx9/jaihind_sports_hub-581455442_17985432491875833_7315029316424995913_n.jpg', l: 'crimson' },
+            { t: 'Shorts', i: 'https://ik.imagekit.io/h9qdzohx9/Screenshot_20260321_194210_Instagram.jpg', l: 'shorts' },
+            { t: 'Accessories', i: 'https://ik.imagekit.io/h9qdzohx9/Picsart_26-03-25_14-50-51-316.jpg', l: 'accessories' }
+        ];
+
+        const TEAMS = [
+            { n: 'RCB', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Royal_Challengers_Bangalore_Logo.svg/200px-Royal_Challengers_Bangalore_Logo.svg.png' },
+            { n: 'CSK', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Chennai_Super_Kings_Logo.svg/200px-Chennai_Super_Kings_Logo.svg.png' },
+            { n: 'MI', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Mumbai_Indians_Logo.svg/200px-Mumbai_Indians_Logo.svg.png' },
+            { n: 'KKR', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Kolkata_Knight_Riders_Logo.svg/200px-Kolkata_Knight_Riders_Logo.svg.png' },
+            { n: 'RR', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/6/60/Rajasthan_Royals_Logo.svg/200px-Rajasthan_Royals_Logo.svg.png' },
+            { n: 'GT', l: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Gujarat_Titans_Logo.svg/200px-Gujarat_Titans_Logo.svg.png' }
+        ];
+
+        const STATES = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi", "Jammu and Kashmir"];
+
+        let cart = []; let curSize = 'M'; let step = 1; let sUrl = ''; let ud = {}; let pGI = 0;
+
+        function showView(v, pid = null) {
+            toggleMenu(false); toggleSearch(false); window.scrollTo({ top:0, behavior:'smooth' });
+            const c = document.getElementById('main-content');
+            
+            if(v === 'home') {
+                c.innerHTML = `
+                    <div class="fade-in">
+                        <!-- Premium Hero Banner -->
+                        <section class="relative h-[60vh] md:h-[75vh] flex items-center justify-center bg-gray-100 overflow-hidden">
+                            <img src="https://img.sanishtech.com/u/a081f6bcd58a9f4daec6ee185032a92b.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 object-top">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="relative z-10 text-center px-6 mt-24">
+                                <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6 shadow-sm">Elevate Your Style. <br/><span class="text-rose-500">Premium Wear.</span></h1>
+                                <p class="text-gray-200 mb-8 max-w-lg mx-auto text-sm md:text-base font-medium">The new standard in athletic and streetwear. Engineered for peak performance and style.</p>
+                                <button onclick="showView('premium')" class="bg-white text-black px-10 py-4 font-bold uppercase text-sm tracking-wider rounded-lg shadow-xl hover:-translate-y-1 transition-transform">Explore Collection</button>
+                            </div>
+                        </section>
+
+                        <!-- Trusted Badge Section -->
+                        <div class="py-8 bg-white border-b border-gray-200">
+                            <div class="max-w-7xl mx-auto flex justify-center gap-8 md:gap-24 text-center px-4">
+                                <div><p class="font-bold text-lg">100%</p><p class="text-xs text-gray-500 uppercase tracking-wide">Authentic</p></div>
+                                <div><p class="font-bold text-lg">Pan India</p><p class="text-xs text-gray-500 uppercase tracking-wide">Delivery</p></div>
+                                <div><p class="font-bold text-lg">Premium</p><p class="text-xs text-gray-500 uppercase tracking-wide">Quality</p></div>
+                            </div>
+                        </div>
+
+                        <!-- New Arrivals -->
+                        <section class="p-6 py-16 bg-white">
+                            <div class="flex justify-between items-center mb-10 max-w-7xl mx-auto">
+                                <h2 class="text-2xl font-bold tracking-tight text-black">Trending Now</h2>
+                                <button onclick="showView('all')" class="text-sm font-semibold uppercase text-gray-600 hover:text-black transition-colors flex items-center gap-1">View All <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"></path></svg></button>
+                            </div>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto">
+                                ${PRODUCTS.slice(0, 4).map(p => `
+                                    <div onclick="showView('detail', ${p.id})" class="product-card group cursor-pointer">
+                                        <div class="aspect-[4/5] overflow-hidden bg-gray-100"><img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"></div>
+                                        <div class="p-4 bg-white">
+                                            <p class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold mb-1">${p.cat}</p>
+                                            <h3 class="product-title truncate mb-2">${p.name}</h3>
+                                            <div class="flex items-center gap-2"><span class="price-tag-new">₹${p.price}</span><span class="price-tag-old">₹${p.oldPrice}</span></div>
+                                        </div>
+                                    </div>`).join('')}
+                            </div>
+                        </section>
+
+                        <!-- Collections Grid (Mobile 2 columns) -->
+                        <section class="p-6 py-16 bg-gray-50 border-t border-gray-200">
+                            <div class="max-w-7xl mx-auto">
+                                <h2 class="text-center text-2xl font-bold tracking-tight mb-12">Shop By Category</h2>
+                                <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                                    ${COLLECTIONS.map(x => `
+                                        <div onclick="showView('${x.l}')" class="relative aspect-[4/3] overflow-hidden group rounded-xl shadow-sm cursor-pointer bg-black">
+                                            <img src="${x.i}" class="w-full h-full object-cover opacity-70 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-60">
+                                            <div class="absolute inset-0 flex items-center justify-center p-4 lg:p-6 text-center">
+                                                <span class="text-lg md:text-2xl font-bold uppercase text-white tracking-wide drop-shadow-md bg-black/20 px-4 py-2 border border-white/20 backdrop-blur-sm rounded-lg">${x.t}</span>
+                                            </div>
+                                        </div>`).join('')}
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Teams Carousel -->
+                        <section class="py-16 bg-white border-t border-gray-200 overflow-hidden">
+                            <h2 class="text-center text-xl font-bold mb-10 text-gray-800">Official IPL Store</h2>
+                            <div class="flex gap-6 overflow-x-auto px-6 no-scrollbar snap-x snap-mandatory pb-4 max-w-7xl mx-auto">
+                                ${TEAMS.map(t => `
+                                    <div onclick="showView('ipl')" class="flex-none w-[120px] snap-center cursor-pointer group">
+                                        <div class="bg-gray-50 rounded-full aspect-square p-6 flex flex-col items-center justify-center border border-gray-100 group-hover:border-rose-500 group-hover:shadow-md transition-all">
+                                            <img src="${t.l}" class="w-full h-full object-contain mix-blend-multiply transition-transform group-hover:scale-110">
+                                        </div>
+                                        <p class="text-center mt-4 font-bold text-xs uppercase text-gray-600 group-hover:text-black">${t.n}</p>
+                                    </div>`).join('')}
+                            </div>
+                        </section>
+                    </div>`;
+            } else if(['premium','crimson','ipl','jerseys','shorts','accessories','all'].includes(v)) {
+                const list = v === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === (v === 'jerseys' ? 'elite' : v));
+                const catTitle = v === 'all' ? 'All Products' : v === 'ipl' ? 'IPL Drops' : v + ' Collection';
+                c.innerHTML = `
+                    <div class="fade-in pb-20 bg-gray-50 min-h-screen">
+                        <div class="bg-white border-b border-gray-200 p-6 sticky top-[64px] z-40">
+                            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                                <h1 class="text-xl md:text-2xl font-bold capitalize text-black">${catTitle}</h1>
+                                <span class="text-sm text-gray-500 font-medium">${list.length} items</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 p-4 md:p-6 max-w-7xl mx-auto mt-4">
+                            ${list.map(p => `
+                                <div onclick="showView('detail', ${p.id})" class="product-card group cursor-pointer shadow-sm">
+                                    <div class="aspect-[4/5] overflow-hidden bg-gray-100"><img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"></div>
+                                    <div class="p-4 bg-white flex flex-col justify-between h-28">
+                                        <h3 class="product-title line-clamp-2">${p.name}</h3>
+                                        <div class="flex items-center gap-2 mt-auto"><span class="price-tag-new">₹${p.price}</span><span class="price-tag-old">₹${p.oldPrice}</span></div>
+                                    </div>
+                                </div>`).join('')}
+                        </div>
+                    </div>`;
+            } else if(v === 'detail') {
+                const p = PRODUCTS.find(x => x.id === pid);
+                pGI = 0;
+                const hasG = p.imgs && p.imgs.length > 1;
+                c.innerHTML = `
+                    <div class="fade-in bg-white min-h-screen">
+                        <div class="max-w-6xl mx-auto p-4 md:p-8 pb-24 text-left">
+                            <!-- Breadcrumb -->
+                            <div class="text-xs font-semibold text-gray-400 mb-6 flex items-center gap-2 uppercase tracking-wide">
+                                <span class="cursor-pointer hover:text-black" onclick="showView('home')">Home</span> / 
+                                <span class="cursor-pointer hover:text-black" onclick="showView('${p.cat === 'elite' ? 'jerseys' : p.cat}')">${p.cat}</span> / 
+                                <span class="text-black truncate w-32 md:w-auto block">${p.name}</span>
+                            </div>
+
+                            <div class="lg:grid lg:grid-cols-2 lg:gap-16">
+                                <!-- Image Gallery -->
+                                <div class="relative overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 aspect-[4/5]">
+                                    <div id="p-gallery" class="flex transition-transform duration-500 ease-out h-full">
+                                        ${hasG ? p.imgs.map(img => `<img src="${img}" class="w-full h-full object-cover flex-shrink-0">`).join('') : `<img src="${p.img}" class="w-full h-full object-cover">`}
+                                    </div>
+                                    ${hasG ? `
+                                        <div class="absolute inset-x-0 bottom-6 flex justify-center gap-2 z-10">
+                                            ${p.imgs.map((_, i) => `<div class="gallery-dot ${i===0?'active':''}"></div>`).join('')}
+                                        </div>
+                                        <button onclick="csG(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-md text-black hover:bg-white"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"></path></svg></button> 
+                                        <button onclick="csG(1)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-md text-black hover:bg-white"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"></path></svg></button>
+                                    ` : ''}
+                                </div>
+                                
+                                <!-- Product Info -->
+                                <div class="flex flex-col mt-8 lg:mt-0">
+                                    <h1 class="text-2xl md:text-4xl font-bold tracking-tight text-gray-900 mb-4">${p.name}</h1>
+                                    <div class="flex items-center gap-4 mb-6">
+                                        <span class="text-3xl font-bold text-black">₹${p.price}</span>
+                                        <span class="text-lg text-gray-400 line-through">₹${p.oldPrice}</span>
+                                        <span class="bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded">SAVE ₹${p.oldPrice - p.price}</span>
+                                    </div>
+                                    
+                                    <div class="mb-8">
+                                        <div class="flex justify-between items-end mb-3">
+                                            <p class="text-sm font-semibold text-gray-900">Select Size</p>
+                                            <span class="text-xs text-gray-500 underline cursor-pointer">Size Guide</span>
+                                        </div>
+                                        <div class="flex flex-wrap gap-3">
+                                            ${['S', 'M', 'L', 'XL', 'XXL'].map(s => `
+                                                <button onclick="ss('${s}', this)" class="w-16 h-12 border rounded-md font-semibold text-sm transition-all flex items-center justify-center ${s === 'M' ? 'bg-black text-white border-black shadow-md' : 'border-gray-300 text-gray-700 hover:border-black'}">${s}</button>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex flex-col sm:flex-row gap-4 mb-10">
+                                        <button onclick="ab(${p.id})" class="flex-1 btn-secondary py-4">Add to Cart</button>
+                                        <button onclick="ab(${p.id}); startCheckout();" class="flex-1 btn-premium py-4">Buy it Now</button>
+                                    </div>
+
+                                    <div class="border-t border-gray-200 pt-8">
+                                        <h3 class="text-sm font-bold text-gray-900 mb-3">Product Details</h3>
+                                        <p class="text-gray-600 text-sm leading-relaxed">${p.desc}</p>
+                                        <ul class="mt-4 space-y-2 text-sm text-gray-600 list-disc pl-5">
+                                            <li>Premium fabric blend</li>
+                                            <li>Standard tailored fit</li>
+                                            <li>Machine washable</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-gray-50 border border-gray-100 rounded-lg p-4 mt-8 flex items-start gap-4">
+                                        <svg class="text-green-600 shrink-0 mt-0.5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                        <div>
+                                            <p class="text-sm font-semibold text-gray-900">100% Secure Checkout</p>
+                                            <p class="text-xs text-gray-500 mt-1">Prepaid orders are processed instantly. No COD available.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            } else if(v === 'faq') {
+                c.innerHTML = `
+                    <div class="p-6 py-16 max-w-3xl mx-auto text-left bg-white fade-in min-h-screen">
+                        <h1 class="text-3xl md:text-4xl font-bold mb-10 text-black">Help & FAQs</h1>
+                        <div class="space-y-6">
+                            ${[
+                                {q:"How do I place an order?", a:"Simply add items to your cart and proceed to our 6-step secure checkout. Fill in your delivery details, review your order, scan the UPI QR code to pay, and upload the payment screenshot. Once verified, your order is confirmed!"},
+                                {q:"What are the payment options?", a:"We currently operate strictly on a PREPAID model to ensure premium service and avoid fake orders. You can pay securely via UPI (Google Pay, PhonePe, Paytm) by scanning the QR code at checkout."},
+                                {q:"Do you offer Cash on Delivery (COD)?", a:"No. To maintain our premium service and fast dispatch times, we only accept prepaid orders. All India Pan Delivery is available."},
+                                {q:"What is the shipping timeframe?", a:"Order verification takes 24-48 hours. Once verified, orders are dispatched and typically reach anywhere in India within 4-7 business days."},
+                                {q:"What is your return/replacement policy?", a:"We only offer replacements for defective items. A mandatory unboxing video (uncut and unedited) must be submitted to our WhatsApp support within 24 hours of delivery to claim a defect replacement."}
+                            ].map(f => `
+                            <div class="border border-gray-200 rounded-xl p-6 bg-gray-50">
+                                <h3 class="text-base font-bold text-gray-900 mb-3">${f.q}</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed">${f.a}</p>
+                            </div>`).join('')}
+                        </div>
+                        <div class="mt-12 text-center p-8 bg-black text-white rounded-xl">
+                            <h3 class="font-bold text-lg mb-2">Still need help?</h3>
+                            <p class="text-sm text-gray-300 mb-6">Our support team is available via WhatsApp.</p>
+                            <a href="https://wa.me/917756810120" target="_blank" class="inline-block bg-white text-black px-6 py-3 rounded font-bold text-sm">Contact Support</a>
+                        </div>
+                    </div>`;
+            } else if(v.startsWith('policy-')) {
+                const pTitle = v.split('-')[1].replace('-', ' ').toUpperCase();
+                let pContent = "";
+                if(v === 'policy-privacy') {
+                    pContent = `<p><strong>1. Introduction</strong><br>Welcome to The Lit Foundation. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website (regardless of where you visit it from) and tell you about your privacy rights and how the law protects you.</p>
+                    <p class="mt-4"><strong>2. The Data We Collect</strong><br>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together follows: Identity Data (first name, last name), Contact Data (billing address, delivery address, email address, telephone numbers), and Transaction Data (details about payments to and from you and other details of products you have purchased from us).</p>
+                    <p class="mt-4"><strong>3. How We Use Your Data</strong><br>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data to process and deliver your order, manage payments, fees and charges, and to collect and recover money owed to us.</p>
+                    <p class="mt-4"><strong>4. Data Security</strong><br>We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed. We limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know.</p>`;
+                } else if(v === 'policy-terms') {
+                    pContent = `<p><strong>1. Acceptance of Terms</strong><br>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement. In addition, when using this website's particular services, you shall be subject to any posted guidelines or rules applicable to such services.</p>
+                    <p class="mt-4"><strong>2. Products and Pricing</strong><br>All products listed on the website, their descriptions, and their prices are subject to change from time to time. We reserve the right, at any time, to modify, suspend, or discontinue the sale of any product with or without notice. All prices are in Indian Rupees (INR).</p>
+                    <p class="mt-4"><strong>3. Payment Terms</strong><br>All orders are prepaid. We do not offer Cash on Delivery. You represent and warrant that if you are purchasing something from us, any payment information you supply is true and complete, charges incurred by you will be honored by your bank or credit card company, and you will pay the charges incurred by you at the posted prices.</p>
+                    <p class="mt-4"><strong>4. Intellectual Property</strong><br>The site and its original content, features, and functionality are owned by The Lit Foundation and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.</p>`;
+                } else if(v === 'policy-shipping') {
+                    pContent = `<p><strong>1. Processing Time</strong><br>All orders are subject to a verification process to ensure payment validity. This process takes 24 to 48 hours. Once verified, the order is packed and dispatched from our warehouse.</p>
+                    <p class="mt-4"><strong>2. Shipping Time & Delivery</strong><br>We offer Pan-India delivery. Standard shipping takes 4 to 7 business days after dispatch depending on your location. Delivery to remote areas may take slightly longer. You will receive tracking information via WhatsApp/Email once your order is dispatched.</p>
+                    <p class="mt-4"><strong>3. Shipping Fees</strong><br>Shipping fees are calculated at checkout based on the delivery location and the weight of the items. Promotional free shipping may be applied automatically at checkout if applicable.</p>
+                    <p class="mt-4"><strong>4. Undelivered Packages</strong><br>If a package is returned to us due to an incorrect address provided by the customer or failure to accept the delivery, we will contact you to arrange redelivery. Additional shipping charges may apply.</p>`;
+                } else if(v === 'policy-return') {
+                    pContent = `<p><strong>1. Strict No-Return Policy</strong><br>Due to the limited and exclusive nature of our drops, all sales are final. We do not offer refunds or exchanges for sizing issues or change of mind. Please refer strictly to the size guide before placing an order.</p>
+                    <p class="mt-4"><strong>2. Defective or Incorrect Items</strong><br>In the rare event that you receive a defective or incorrect item, we will offer a replacement. To be eligible for a replacement, a mandatory Unboxing Video is required. The video must be uncut, unedited, and clearly show the shipping label, the opening of the sealed package, and the defect.</p>
+                    <p class="mt-4"><strong>3. Claim Process</strong><br>Claims for defects must be submitted to our WhatsApp support within 24 hours of delivery. If the claim is approved, we will initiate the replacement process at no additional cost to you.</p>
+                    <p class="mt-4"><strong>4. Condition of Replacement Items</strong><br>Any item approved for return/replacement must be unused, unwashed, and in the same condition that you received it. It must also be in the original packaging with all tags attached.</p>`;
+                }
+
+                c.innerHTML = `
+                    <div class="bg-gray-50 min-h-screen pt-10 pb-24 px-4">
+                        <div class="bg-white p-8 md:p-12 max-w-4xl mx-auto text-left shadow-sm border border-gray-200 rounded-2xl fade-in text-black">
+                            <h1 class="text-3xl font-bold mb-8 uppercase text-black border-b border-gray-100 pb-6">${pTitle}</h1>
+                            <div class="text-gray-600 text-sm leading-relaxed space-y-4">
+                                ${pContent}
+                            </div>
+                            <button onclick="showView('home')" class="btn-secondary mt-12 px-8 py-3 w-max">Back to Home</button>
+                        </div>
+                    </div>`;
+            } else if(v === 'checkout') rcs();
+        }
+
+        function csG(d) { 
+            const g = document.getElementById('p-gallery'); const dots = document.querySelectorAll('.gallery-dot');
+            const t = g.children.length; pGI = (pGI + d + t) % t; 
+            g.style.transform = `translateX(-${pGI * 100}%)`;
+            dots.forEach((dot, idx) => dot.classList.toggle('active', idx === pGI));
+        }
+
+        function toggleMenu(o) { document.getElementById('nav-drawer').classList.toggle('drawer-open', o); }
+        function toggleCart(o) { 
+            document.getElementById('cart-drawer').classList.toggle('cart-open', o); 
+            document.getElementById('cart-overlay').classList.toggle('hidden', !o); 
+            if(o) uc(); 
+        }
+        function toggleSearch(o) { document.getElementById('search-overlay').classList.toggle('search-active', o); if(o) { document.getElementById('search-input').value=''; document.getElementById('search-results').innerHTML=''; document.getElementById('search-input').focus(); } }
+
+        function handleSearch(val) {
+            if(!val) { document.getElementById('search-results').innerHTML = ''; return; }
+            const results = PRODUCTS.filter(p => p.name.toLowerCase().includes(val.toLowerCase()) || (p.team && p.team.toLowerCase().includes(val.toLowerCase())));
+            const resDiv = document.getElementById('search-results');
+            resDiv.innerHTML = results.map(p => `
+                <div onclick="showView('detail', ${p.id})" class="product-card cursor-pointer group p-3 bg-white border border-gray-100">
+                    <img src="${p.img}" class="aspect-square object-cover rounded-md group-hover:scale-105 transition-transform duration-300 bg-gray-50">
+                    <h3 class="text-xs font-semibold mt-3 text-black truncate">${p.name}</h3>
+                    <p class="text-sm font-bold text-black mt-1">₹${p.price}</p>
+                </div>`).join('');
+        }
+
+        function ss(s, el) { curSize = s; Array.from(el.parentNode.children).forEach(b => b.className = "w-16 h-12 border rounded-md font-semibold text-sm transition-all flex items-center justify-center border-gray-300 text-gray-700 hover:border-black"); el.className = "w-16 h-12 border rounded-md font-semibold text-sm transition-all flex items-center justify-center bg-black text-white border-black shadow-md"; }
+        
+        function ab(id) { 
+            const p = PRODUCTS.find(x => x.id === id); 
+            cart.push({ ...p, size: curSize }); 
+            uc(); 
+            toggleCart(true); 
+        }
+        
+        function uc() {
+            const l = document.getElementById('cart-items');
+            if(cart.length === 0) {
+                l.innerHTML = `<div class="flex flex-col items-center justify-center h-full text-gray-400 mt-20"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="mb-4"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><p class="font-medium text-sm">Your cart is empty</p><button onclick="toggleCart(false); showView('premium')" class="mt-6 btn-secondary px-6 py-2 text-xs">Start Shopping</button></div>`;
+            } else {
+                l.innerHTML = cart.map((i, idx) => `
+                    <div class="flex gap-4 p-3 border border-gray-100 rounded-xl bg-gray-50/50">
+                        <img src="${i.img}" class="w-20 h-24 object-cover rounded-lg border border-gray-200 bg-white">
+                        <div class="flex-1 flex flex-col justify-between py-1">
+                            <div>
+                                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">${i.cat}</p>
+                                <p class="text-sm font-semibold text-black leading-tight line-clamp-2">${i.name}</p>
+                                <p class="text-xs text-gray-600 mt-1">Size: <span class="font-bold text-black">${i.size}</span></p>
+                            </div>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="font-bold text-sm text-black">₹${i.price}</span>
+                                <button onclick="cart.splice(${idx},1); uc();" class="text-xs font-semibold text-red-500 hover:text-red-700 underline">Remove</button>
+                            </div>
+                        </div>
+                    </div>`).join('');
+            }
+            const sum = cart.reduce((a,b)=>a+b.price, 0); 
+            document.getElementById('cart-total').innerText = `₹${sum}`; 
+            document.getElementById('cart-count').innerText = cart.length; 
+            document.getElementById('cart-count').classList.toggle('hidden', cart.length === 0); 
+            document.getElementById('cart-footer').classList.toggle('hidden', cart.length === 0);
+        }
+
+        function startCheckout() { 
+            if(cart.length === 0) return;
+            step = 1; 
+            toggleCart(false); 
+            showView('checkout'); 
+        }
+
+        function getStepHeader(current) {
+            return `
+                <div class="flex items-center justify-between mb-10 max-w-md mx-auto">
+                    ${[1, 2, 3, 4, 5, 6].map((s, i) => `
+                        <div class="flex flex-col items-center relative z-10">
+                            <div class="step-indicator ${current === s ? 'step-active' : (s < current ? 'step-completed' : 'step-pending')} shadow-sm border ${current===s ? 'border-black' : 'border-gray-200'}">
+                                ${s < current ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : s}
+                            </div>
+                        </div>
+                        ${i < 5 ? `<div class="step-line ${s < current ? 'step-line-active' : ''}"></div>` : ''}
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // 6-STEP FLIPKART STYLE CHECKOUT
+        function rcs() {
+            window.scrollTo(0,0);
+            const c = document.getElementById('main-content'); 
+            const sum = cart.reduce((a,b)=>a+b.price, 0);
+            
+            let htmlStr = `<div class="p-6 max-w-2xl mx-auto py-12 md:py-20 fade-in bg-white min-h-screen">`;
+            htmlStr += getStepHeader(step);
+
+            if(step === 1) {
+                // Step 1: Delivery Address
+                htmlStr += `
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm">
+                        <h2 class="text-xl font-bold mb-6 text-black border-b border-gray-100 pb-4">1. Delivery Address</h2>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input id="in-n" type="text" placeholder="Full Name" value="${ud.n||''}"> 
+                                <input id="in-p" type="tel" placeholder="WhatsApp / Phone Number" value="${ud.p||''}"> 
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input id="in-i" type="text" placeholder="Pincode" value="${ud.i||''}"> 
+                                <input id="in-c" type="text" placeholder="City" value="${ud.c||''}"> 
+                            </div>
+                            <select id="in-s" class="text-gray-500">
+                                <option value="" disabled ${!ud.s ? 'selected' : ''}>Select State</option>
+                                ${STATES.map(st => `<option value="${st}" ${ud.s===st?'selected':''}>${st}</option>`).join('')}
+                            </select>
+                            <textarea id="in-d" placeholder="Full Address (House No, Building, Street, Landmark)" rows="3">${ud.d||''}</textarea>
+                            <button onclick="sv1()" class="w-full btn-premium mt-4 text-base py-4">Save & Continue</button>
+                        </div>
+                    </div>`;
+            } else if(step === 2) {
+                // Step 2: Order Summary
+                htmlStr += `
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm">
+                        <h2 class="text-xl font-bold mb-6 text-black border-b border-gray-100 pb-4 flex justify-between items-center">
+                            <span>2. Order Summary</span>
+                            <span class="text-sm font-normal text-gray-500">${cart.length} Item(s)</span>
+                        </h2>
+                        <div class="space-y-4 max-h-[40vh] overflow-y-auto pr-2 no-scrollbar">
+                            ${cart.map(i => `
+                                <div class="flex gap-4 p-4 border border-gray-100 rounded-xl bg-gray-50">
+                                    <img src="${i.img}" class="w-16 h-20 object-cover rounded shadow-sm bg-white">
+                                    <div class="flex-1 flex flex-col justify-center">
+                                        <p class="font-semibold text-sm text-black">${i.name}</p>
+                                        <p class="text-xs text-gray-500 mt-1">Size: ${i.size} | Qty: 1</p>
+                                        <p class="font-bold text-sm text-black mt-2">₹${i.price}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="mt-6 border-t border-gray-100 pt-6">
+                            <div class="flex justify-between text-sm mb-2 text-gray-600"><span>Subtotal</span><span>₹${sum}</span></div>
+                            <div class="flex justify-between text-sm mb-2 text-gray-600"><span>Shipping</span><span class="text-green-600 font-semibold">FREE</span></div>
+                            <div class="flex justify-between text-lg font-bold mt-4 text-black"><span>Total Payable</span><span>₹${sum}</span></div>
+                        </div>
+                        <div class="flex gap-4 mt-8">
+                            <button onclick="step=1; rcs()" class="flex-1 btn-secondary text-sm">Back</button>
+                            <button onclick="step=3; rcs()" class="flex-[2] btn-premium text-base">Proceed to Payment</button>
+                        </div>
+                    </div>`;
+            } else if(step === 3) {
+                // Step 3: Payment
+                htmlStr += `
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm text-center">
+                        <h2 class="text-xl font-bold mb-2 text-black">3. Secure Payment</h2>
+                        <p class="text-sm text-gray-500 mb-8">Scan QR with any UPI app to pay</p>
+                        
+                        <div class="bg-gray-50 p-8 rounded-2xl inline-block border border-gray-200 mb-6 relative">
+                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-rose-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Pay ₹${sum}</div>
+                            <img src="https://ik.imagekit.io/h9qdzohx9/IMG-20260325-WA0021.jpg" class="w-48 h-48 md:w-56 md:h-56 mx-auto rounded-xl shadow-md bg-white p-2">
+                        </div>
+                        
+                        <div class="flex items-center justify-center gap-2 mb-8 text-gray-400">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/1200px-UPI-Logo-vector.svg.png" class="h-4 grayscale opacity-50">
+                            <span class="text-xs">Supported via Google Pay, PhonePe, Paytm, etc.</span>
+                        </div>
+                        
+                        <div class="flex gap-4">
+                            <button onclick="step=2; rcs()" class="flex-1 btn-secondary text-sm py-4">Back</button>
+                            <button onclick="step=4; rcs()" class="flex-[2] btn-premium text-base py-4 bg-green-600 border-green-600 hover:text-green-600 hover:border-green-600 hover:bg-white">I Have Paid</button>
+                        </div>
+                    </div>`;
+            } else if(step === 4) {
+                // Step 4: Upload Proof
+                htmlStr += `
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm text-center">
+                        <h2 class="text-xl font-bold mb-2 text-black">4. Payment Verification</h2>
+                        <p class="text-sm text-gray-500 mb-8">Upload the screenshot of your successful transaction</p>
+                        
+                        <div class="border-2 border-dashed border-gray-300 hover:border-black transition-colors p-10 md:p-14 rounded-2xl bg-gray-50 relative cursor-pointer group" onclick="document.getElementById('file-upload').click()">
+                            <input id="file-upload" type="file" class="hidden" onchange="up(event)" accept="image/*">
+                            <div id="upload-content" class="flex flex-col items-center">
+                                <div class="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                                </div>
+                                <p class="font-semibold text-sm text-black mb-1">Click to upload screenshot</p>
+                                <p class="text-xs text-gray-500">JPG, PNG, JPEG (Max 5MB)</p>
+                            </div>
+                            <div id="upload-preview" class="hidden absolute inset-0 bg-white rounded-2xl p-2 items-center justify-center">
+                                <!-- Image preview injected here -->
+                            </div>
+                        </div>
+                        <p id="upl" class="text-rose-600 text-xs font-semibold mt-4 h-4"></p>
+                        
+                        <div class="flex gap-4 mt-8">
+                            <button onclick="step=3; rcs()" class="flex-1 btn-secondary text-sm">Back</button>
+                            <button id="nxt" disabled onclick="step=5; rcs()" class="flex-[2] btn-premium text-base">Verify & Continue</button>
+                        </div>
+                    </div>`;
+            } else if(step === 5) {
+                // Step 5: Final Review
+                htmlStr += `
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm">
+                        <h2 class="text-xl font-bold mb-6 text-black border-b border-gray-100 pb-4">5. Final Review</h2>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Delivery Address</h3>
+                                    <p class="font-semibold text-black">${ud.n}</p>
+                                    <p class="text-sm text-gray-600 mt-1">${ud.d}</p>
+                                    <p class="text-sm text-gray-600">${ud.c}, ${ud.s} - ${ud.i}</p>
+                                    <p class="text-sm text-gray-600 mt-1">Phone: ${ud.p}</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Order Total</h3>
+                                    <p class="text-2xl font-bold text-black">₹${sum}</p>
+                                    <p class="text-xs text-green-600 font-semibold mt-1">Paid via UPI</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 flex flex-col items-center justify-center text-center">
+                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 w-full text-left">Payment Proof</h3>
+                                <div class="relative w-32 h-40 rounded-lg overflow-hidden border border-gray-300 shadow-sm">
+                                    <img src="${sUrl}" class="w-full h-full object-cover">
+                                    <div class="absolute top-2 right-2 bg-green-500 text-white rounded-full p-1 shadow-md">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-3 font-medium">Logged & Ready for Verification</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-gray-100 text-xs text-gray-500 mb-6 text-center md:text-left">
+                            By placing this order, you agree to our <span class="underline cursor-pointer hover:text-black" onclick="showView('policy-terms')">Terms</span> & <span class="underline cursor-pointer hover:text-black" onclick="showView('policy-return')">Return Policy</span>.
+                        </div>
+
+                        <button id="fsub" onclick="sub()" class="w-full btn-premium py-4 text-base">Place Order Now</button>
+                    </div>`;
+            } else if(step === 6) {
+                // Step 6: Success
+                htmlStr += `
+                    <div class="bg-white border border-gray-200 rounded-2xl p-8 md:p-16 shadow-sm text-center">
+                        <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="text-green-600 w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-black tracking-tight mb-4">Order Placed Successfully!</h2>
+                        <p class="text-gray-600 text-sm max-w-sm mx-auto leading-relaxed mb-8">Thank you for choosing The Lit Foundation. We are verifying your payment log. You will receive shipping updates on WhatsApp shortly.</p>
+                        
+                        <div class="bg-gray-50 rounded-xl p-4 border border-gray-100 inline-block mb-10 text-left w-full max-w-xs">
+                            <p class="text-xs text-gray-500 font-medium">Expected Dispatch</p>
+                            <p class="text-sm font-bold text-black mt-1">Within 24-48 Hours</p>
+                        </div>
+                        
+                        <button onclick="location.reload()" class="btn-secondary px-12 py-3 mx-auto max-w-xs text-sm">Continue Shopping</button>
+                    </div>`;
+            }
+            
+            htmlStr += `</div>`;
+            c.innerHTML = htmlStr;
+        }
+
+        function sv1() { 
+            ud = { 
+                n: document.getElementById('in-n').value, 
+                p: document.getElementById('in-p').value, 
+                i: document.getElementById('in-i').value, 
+                c: document.getElementById('in-c').value, 
+                s: document.getElementById('in-s').value,
+                d: document.getElementById('in-d').value 
+            }; 
+            if(!ud.n || !ud.p || !ud.i || !ud.c || !ud.s || !ud.d) { 
+                alert('Please fill all address fields to continue.'); 
+                return; 
+            } 
+            step = 2; rcs(); 
+        }
+        
+        async function up(e) { 
+            const f = e.target.files[0]; if(!f) return;
+            const msg = document.getElementById('upl'); 
+            const b = document.getElementById('nxt'); 
+            const c = document.getElementById('upload-content');
+            const prev = document.getElementById('upload-preview');
+
+            msg.innerText = 'Uploading secure screenshot...'; 
+            msg.className = "text-gray-500 text-xs font-semibold mt-4 h-4";
+            
+            const fd = new FormData(); fd.append('file', f); fd.append('upload_preset', 'thelit_upload'); 
+            try { 
+                const res = await fetch('https://api.cloudinary.com/v1_1/dsa7pugor/image/upload', { method: 'POST', body: fd }); 
+                const d = await res.json(); 
+                sUrl = d.secure_url; 
+                
+                msg.innerText = ''; 
+                c.classList.add('hidden');
+                prev.classList.remove('hidden');
+                prev.classList.add('flex');
+                prev.innerHTML = `<img src="${sUrl}" class="w-full h-full object-contain rounded-xl"><div class="absolute bottom-4 bg-green-500 text-white text-[10px] px-3 py-1 rounded-full shadow-md font-bold uppercase tracking-wider flex items-center gap-1"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Uploaded</div>`;
+                
+                b.disabled = false; 
+            } catch(err) { 
+                msg.innerText = 'Upload failed. Please try a smaller image size.'; 
+                msg.className = "text-rose-600 text-xs font-semibold mt-4 h-4";
+            } 
+        }
+        
+        async function sub() { 
+            const b = document.getElementById('fsub'); 
+            b.innerText = 'Processing Order...'; b.disabled = true; 
+            const body = { 
+                Name: ud.n, WhatsApp: ud.p, Pincode: ud.i, City: ud.c, State: ud.s, Address: ud.d, 
+                Items: cart.map(i => `${i.name} (Size: ${i.size})`).join(' | '), 
+                TotalAmount: document.getElementById('cart-total').innerText, 
+                PaymentProof: sUrl, Date: new Date().toLocaleString() 
+            }; 
+            try { 
+                await fetch('https://formspree.io/f/xpqynony', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) }); 
+                step = 6; cart = []; uc(); rcs(); 
+            } catch(e) { 
+                b.innerText = 'Failed. Try Again.'; b.disabled = false; 
+                alert('Something went wrong. Please check your connection and try again.');
+            } 
+        }
+
+        window.onload = () => showView('home');
+    </script>
+</body>
+</html>
+
+
